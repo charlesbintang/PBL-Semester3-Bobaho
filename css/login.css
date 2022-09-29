@@ -11,6 +11,7 @@ body{
 .col-md-6{
     background-color: #d6d5d5;
     height: 400px;
+    width: 300px;
     border: 0;
     margin: 70px auto;
 }

@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="login.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
@@ -57,11 +57,24 @@
     </div>
     <div class="row mb-3">
         <div class="col-md">
-            <form action="" method="post">
+            <form action="create.php" method="post">
             <div class="mb-3">
-                <label></label>
+                <label for="nama" class="form-label">Jenis Kategori</label>
                 <select class="form-select w-50">
-                    <option selected disabled>---------------------Pilih Kategori---------------------</option>
+                    <option selected disabled>Pilih Kategori</option>
+                    <option value="1">Best Seller</option>
+                    <option value="2">Coffee</option>
+                    <option value="3">Yakult</option>
+                    <option value="4">Chocolate</option>
+                    <option value="5">Tea Series</option>
+                    <option value="6">Fruit & Smoothies</option>
+                    <option value="7">Mocktail</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama Kategori Minuman</label>
+                <select class="form-select w-50">
+                    <option selected disabled>Pilih Kategori</option>
                     <option value="1">Best Seller</option>
                     <option value="2">Coffee</option>
                     <option value="3">Yakult</option>
@@ -76,9 +89,9 @@
                 <input type="text" class="form-control w-50" id="nama" placeholder="Nama Minuman" autocomplete="off" required>
             </div>
             <div class="mb-3">
-                <label>Topping</label>
+                <label for="nama" class="form-label">Nama Jenis Topping</label>
                 <select class="form-select w-50">
-                    <option selected disabled>---------------------Pilih Topping---------------------</option>
+                    <option selected disabled>Tambah Topping</option>
                     <option value="1">Boba Crystal Jelly</option>
                     <option value="2">Black Boba</option>
                     <option value="3">Choco Chip</option>
@@ -123,7 +136,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h4 class="text-uppercase fw-bold">About</h4>
-                <p>Bobaho merupakan stand boba dengan minuman boba terenak di Batam Bobaho merupakan stand boba dengan minuman boba terenak di Batam Bobaho merupakan stand boba dengan minuman boba terenak di Batam Bobaho merupakan stand boba dengan minuman boba terenak di Batam</p>
+                <p>Bobaho merupakan  boba boba dengan minuman boba terenak di Batam</p>
             </div>
             <div class="col-md-6 text-center">
                 <h4 class="text-uppercase fw-bold">Link Account</h4>

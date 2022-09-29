@@ -1,3 +1,20 @@
+<?php
+$koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
+$statistik = query("SELECT * FROM menu_costumer");
+
+function query($data){
+  global $koneksi;
+
+  $hasil = mysqli_query($koneksi, $data);
+  $rows = [];
+  while ($row = mysqli_fetch_assoc($hasil)){
+    $rows[] = $row;
+  }
+
+  return $rows;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +40,7 @@
 </head>
 <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark text-uppercase">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top text-uppercase">
     <div class="container">
         <a class="navbar-brand" href="#">CRUD | PHP</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,8 +74,7 @@
     </div>
     <div class="row">
         <div class="cold-md">
-            <a href="tambah.php" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Minuman</a>
-            <a href="tmbhtoping.php" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Topping</a>
+            <a href="tambah.php" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
             <a href="#" class="btn btn-success ms-1" target="_blank"><i class="bi bi-file-earmark-spreadsheet-fill"></i>&nbsp;Ekspor ke excel</a>
         </div>
     </div>
@@ -66,40 +82,31 @@
         <div class="col-md">
             <table id="example" class="table table-striped" style="width:100%">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
+                <tr>
+                    <th>Nomor</th>
+                    <th>Jenis Produk</th>
+                    <th>kategori</th>
+                    <th>Nama Produk</th>
+                    <th>harga </th>
+                    <th>Catatan</th>
+                    <th colspan = 2>Tindakan</th>
+                </tr>
                 </thead>
                 <tbody>
+                    <?php $y = 1; ?>
+                    <?php foreach($statistik as $data) : ?>
                     <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011-04-25</td>
-                        <td>$320,800</td>
+                        <td><?php echo $y; ?></td>
+                        <td><?php echo $data["jenisproduk"]; ?></td>
+                        <td><?php echo $data["kategori"]; ?></td>
+                        <td><?php echo $data["namaproduk"]; ?></td>
+                        <td><?php echo $data["harga"]; ?></td>
+                        <td><?php echo $data["catatan"]; ?></td>
+                        <td> <a href="update.php?id=<?php echo $data["id_menu"]; ?>">Ubah</a> </td>
+                        <td> <a href="delete.php?id=<?php echo $data["id_menu"]; ?>">Hapus</a> </td>
                     </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011-07-25</td>
-                        <td>$170,750</td>
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                        <td>2009-01-12</td>
-                        <td>$86,000</td>
-                    </tr>
+                    <?php $y++; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -109,11 +116,11 @@
 <!-- Close Container -->
 
 <!-- Footer -->
-    <div class="container-fluid bg-dark text-white">
+    <div class="container-fluid bg-dark fixed-bottom text-white">
         <div class="row">
             <div class="col-md-6">
                 <h4 class="text-uppercase fw-bold">About</h4>
-                <p>Bobaho merupakan stand boba dengan minuman boba terenak di Batam Bobaho merupakan stand boba dengan minuman boba terenak di Batam Bobaho merupakan stand boba dengan minuman boba terenak di Batam Bobaho merupakan stand boba dengan minuman boba terenak di Batam</p>
+                <p>Bobaho merupakan stand boba dengan minuman boba terenak di Batam</p>
             </div>
             <div class="col-md-6 text-center">
                 <h4 class="text-uppercase fw-bold">Link Account</h4>
@@ -131,14 +138,5 @@
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
     
     <!-- Data Tables -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-        $('#example').DataTable();
-        });
-    </script>
 </body>
 </html>
