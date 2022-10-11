@@ -60,55 +60,35 @@
             <form action="create.php" method="post">
             <div class="mb-3">
                 <label for="nama" class="form-label">Jenis Kategori</label>
-                <select class="form-select w-50">
-                    <option selected disabled>Pilih Kategori</option>
-                    <option value="1">Best Seller</option>
-                    <option value="2">Coffee</option>
-                    <option value="3">Yakult</option>
-                    <option value="4">Chocolate</option>
-                    <option value="5">Tea Series</option>
-                    <option value="6">Fruit & Smoothies</option>
-                    <option value="7">Mocktail</option>
-                </select>
+                    <select name="kategori" class="form-select w-50">
+                        <option selected disabled>Kategori</option>
+                        <option value="best seller">Best Seller</option>
+                        <option value="chocolate">Chocolate</option>
+                        <option value="yakult">Yakult</option>
+                        <option value="mocktail">Mocktail</option>
+                        <option value="fruit & smothies">Fruit & Smothies</option>
+                        <option value="tea series">Tea Series</option>
+                    </select> 
             </div>
             <div class="mb-3">
-                <label for="nama" class="form-label">Nama Kategori Minuman</label>
-                <select class="form-select w-50">
-                    <option selected disabled>Pilih Kategori</option>
-                    <option value="1">Best Seller</option>
-                    <option value="2">Coffee</option>
-                    <option value="3">Yakult</option>
-                    <option value="4">Chocolate</option>
-                    <option value="5">Tea Series</option>
-                    <option value="6">Fruit & Smoothies</option>
-                    <option value="7">Mocktail</option>
+                <label for="nama" class="form-label">Jenis Produk</label>
+                <select name="jenisproduk" class="form-select w-50">
+                    <option selected disabled>Jenis Produk</option>
+                    <option value="minuman">Minuman</option>
+                    <option value="topping">Topping</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama Minuman</label>
-                <input type="text" class="form-control w-50" id="nama" placeholder="Nama Minuman" autocomplete="off" required>
-            </div>
-            <div class="mb-3">
-                <label for="nama" class="form-label">Nama Jenis Topping</label>
-                <select class="form-select w-50">
-                    <option selected disabled>Tambah Topping</option>
-                    <option value="1">Boba Crystal Jelly</option>
-                    <option value="2">Black Boba</option>
-                    <option value="3">Choco Chip</option>
-                    <option value="4">Oreo</option>
-                    <option value="5">Cheese</option>
-                    <option value="6">Chocolate</option>
-                    <option value="7">Cream Cheese</option>
-                    <option value="8">Nata de Coco</option>
-                </select>
+                <input name="namaproduk" type="text" class="form-control w-50" id="nama" placeholder="Nama Minuman" autocomplete="off" required>
             </div>
             <div class="mb-3">
                 <label for="Harga" class="form-label">Harga Minuman</label>
-                <input type="varchar" class="form-control w-50" id="Harga" placeholder="Harga Minuman" autocomplete="off" required>
+                <input type="varchar" name="harga" class="form-control w-50" id="Harga" placeholder="Harga Minuman" autocomplete="off" required>
             </div>
             <div class="mb-3">
                 <label for="Catatan" class="form-label">Catatan</label>
-                <textarea class="form-control w-50" id="Catatan" rows="3" placeholder="Catatan"></textarea>
+                <textarea name="catatan" class="form-control w-50" id="Catatan" rows="3" placeholder="Catatan"></textarea>
             </div>
             <hr>
             <div class="col-12">

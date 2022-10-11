@@ -13,7 +13,7 @@ body{
     height: 400px;
     width: 300px;
     border: 0;
-    margin: 70px auto;
+    margin: auto;
 }
 
 
@@ -21,3 +21,5 @@ body{
 form input{
     margin: auto;
 }
+
+

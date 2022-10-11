@@ -42,7 +42,7 @@ function query($data){
     <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top text-uppercase">
     <div class="container">
-        <a class="navbar-brand" href="#">CRUD | PHP</a>
+        <a class="navbar-brand" href="login.php">BOBAHO</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -75,7 +75,7 @@ function query($data){
     <div class="row">
         <div class="cold-md">
             <a href="tambah.php" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
-            <a href="#" class="btn btn-success ms-1" target="_blank"><i class="bi bi-file-earmark-spreadsheet-fill"></i>&nbsp;Ekspor ke excel</a>
+            <a href="fixedadminpesanan.php" class="btn btn-success ms-1"><i class="bi bi-cart2"></i></i>&nbsp;Keranjang</a>
         </div>
     </div>
     <div class="row my-5">
@@ -120,16 +120,10 @@ function query($data){
         <div class="row">
             <div class="col-md-6">
                 <h4 class="text-uppercase fw-bold">About</h4>
-                <p>Bobaho merupakan stand boba dengan minuman boba terenak di Batam</p>
-            </div>
-            <div class="col-md-6 text-center">
-                <h4 class="text-uppercase fw-bold">Link Account</h4>
-                <a href="" target="_blank"></a>
-                <a href="" target="_blank"></a>
-                <a href="" target="_blank"></a>
-                <a href="" target="_blank"></a>
-            </div>
-        </div>
+                <p>Bobaho adalah outlet tempat penjualan minuman dengan berbagai macam rasa khususnya minuman boba 
+outlet ini sudah memiliki berbagai cabang di kota-kota besar seperti medan,batam,dan pangkal pinang.
+</p>
+           
     </div>
 <!-- Close Footer -->
 
