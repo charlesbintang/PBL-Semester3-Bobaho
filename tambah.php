@@ -54,10 +54,20 @@
             <h2><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Menu</h2>
         </div>
         <hr>
-    </div>
+    </div>            
+    
+    <div class="mb-3">
+    <form action="create.php" method="post">
+        <label for="nama" class="form-label">Jenis Produk</label>
+            <select name="jenisproduk" class="form-select w-50">
+                <option selected disabled>Jenis Produk</option>
+                <option value="minuman">Minuman</option>
+                <option value="topping">Topping</option>
+            </select>
+        </div>
+    
     <div class="row mb-3">
         <div class="col-md">
-            <form action="create.php" method="post">
             <div class="mb-3">
                 <label for="nama" class="form-label">Jenis Kategori</label>
                     <select name="kategori" class="form-select w-50">
@@ -70,14 +80,7 @@
                         <option value="tea series">Tea Series</option>
                     </select> 
             </div>
-            <div class="mb-3">
-                <label for="nama" class="form-label">Jenis Produk</label>
-                <select name="jenisproduk" class="form-select w-50">
-                    <option selected disabled>Jenis Produk</option>
-                    <option value="minuman">Minuman</option>
-                    <option value="topping">Topping</option>
-                </select>
-            </div>
+
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama Minuman</label>
                 <input name="namaproduk" type="text" class="form-control w-50" id="nama" placeholder="Nama Minuman" autocomplete="off" required>
@@ -103,7 +106,7 @@
                 </div>
             </div>
             <a href="login.php" class="btn btn-secondary">Kembali</a>
-            <button type="submit" name="tambah" class="btn btn-primary m-2">Simpan</button>
+            <button type="submit" name="submit" class="btn btn-primary m-2">Simpan</button>
             </form>
         </div>
     </div>

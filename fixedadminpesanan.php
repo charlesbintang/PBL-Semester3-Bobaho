@@ -53,9 +53,22 @@
         border: 2px solid transparent;
         border-radius: 9px;
         outline: none;
-        background: #D9D9D9;
+        background: #d6dad6;
         
        }
+       .LihatPesanan:hover {
+        background:#d6dad6d3;
+        color:#244b39;
+        
+           
+        }
+        .LihatPesanan:active {
+            background: #d6dad6;
+            color: #244b39;
+            font-weight: bold;
+            
+         
+        }
        .Clear {
         width: 125px;
         height: 29px;
@@ -64,10 +77,24 @@
         border: 2px solid transparent;
         border-radius: 9px;
         outline: none;
-        background: #3BBA00;
-        
-        color: white;
+        background:#F5B202;
+        color:#244b39;
+        font-size: 24px;
        }
+
+        .Clear:hover {
+        background:#f5b002ce;
+        color:#244b39;
+        
+           
+        }
+        .Clear:active {
+            background: #09c403ea;
+            color: #1d3b2d;
+            font-weight: bold;
+            
+         
+        }
        #KodePesanan {
         float: right;
         width: 73px;
@@ -81,6 +108,7 @@
         line-height: 66px;
         
        }
+       
        .kelompok {
         display: flex;
         flex-wrap: wrap;
@@ -88,76 +116,34 @@
         /* border: 1px solid black; */
         
        }
-       hr.vertical {
-        width: 0px;
-        height: 60px;
-        color: black;
-        left: 50%;
-        margin-top: 15px;
-        background: #000000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        
-        }
-       .footer {
-        width: 460px;
-        height: 90px;
-        background: #F5B202;
-        border: 2px solid transparent;
-        border-radius: 50px 50px 50px 50px ;
-        display: flex;
-        justify-content: space-around;
-        margin-top: 30px ;
-       }
-
-       .HomeButton {
-        background-color: transparent;
-        width: 50px;
-        height: 50px;
-        padding: 0px;
-        font-size: 35px;
-        outline: none;
-        border: none;
-       }
-       .HomeButton:hover {
-            color: #2c2c2c;
-        }
-        .HomeButton:active {
-            font-size: 45px;
-            color: #6b6b6b;
-        }
-       .Keranjang {
-        background-color: transparent;
-        width: 40px;
-        height: 40px;
-        padding: 0px;
-        font-size: 35px;
-        outline: none;
-        border: none;
-       }
-       .Keranjang:hover {
-            color: #2c2c2c;
-        }
-        .Keranjang:active {
-            font-size: 45px;
-            color: #6b6b6b;
-        }
-       .footer button.HomeButton {
-        margin-top: 23px;
-       }
-       .footer button.Keranjang {
-        margin-top: 23px;
-       }
-       
-       
        
        #kaki {
         display: flex;
         justify-content: center;
         align-items: center;
        }
+
+       .tombolBack {
+            margin-left: 18px;
+            border-radius: 50%;
+            font-size: 24px;
+            background-color: transparent;
+            width: 35px;
+            height: 35px;
+            padding: 0;
+            border: 1px solid;
+        }
+        .backButton {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .back {
+            display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        }
 
        @media all and (min-width: 560px) {
          #pesanan { 
@@ -179,6 +165,12 @@
         height: 35px;
         border-radius: 15px;
         }
+        .LihatPesanan {
+        width: 279px;
+        height: 35px;
+        font-size: larger;
+        border-radius: 15px;
+        }
         .Clear {
         width: 279px;
         height: 35px;
@@ -189,6 +181,8 @@
         width: 750px;
         height: 90px;
         }
+
+        
        }
 
        @media all and (min-width: 1400px) {
@@ -211,12 +205,6 @@
         font-size: larger;
         border-radius: 15px;
         }
-        .Clear {
-        width: 590px;
-        height: 38px;
-        font-size: larger;
-        border-radius: 15px;
-        }
         .footer {
         width: 1400px;
         height: 90px;
@@ -227,10 +215,7 @@
         font-size: larger;
         border-radius: 15px;
         }
-        
        }
-      
-
     </style>
 </head>
 
@@ -243,7 +228,6 @@
         <img src="Judul.png" width="150px" id="Bobaandtea" alt="">
         <img src="logo.png" width="100px" id="ayam" alt="">
     </header>
-
 
 
 
@@ -327,6 +311,16 @@
             <button class="Clear" type="button">Clear</button>
             
         </div>
+
+        <!-- tombol back -->
+        <div class="back">
+            <button class="tombolBack" type="button">
+                <span class="backButton">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                </span>
+                <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+            </button>
 
     </div>
     

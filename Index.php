@@ -46,7 +46,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <!-- Own CSS -->
-    <link rel="stylesheet" href="css/login.css?v=0.0.4">
+    <link rel="stylesheet" href="css/login.css?v=0.0.2">
     <title>Login | CRUD PHP</title>
 </head>
 <body>

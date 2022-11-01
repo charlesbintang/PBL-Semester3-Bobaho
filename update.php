@@ -37,14 +37,14 @@ if ( isset($_POST["submit"]) ){
     echo 
     "<script>
     alert('Data berhasil diubah');
-    document.location.href = 'read.php';
+    document.location.href = 'login.php';
     </script>";
   }
   else{
     echo 
     "<script>
     alert('Data gagal diubah');
-    document.location.href = 'read.php';
+    document.location.href = 'update.php';
     </script>";
   }
 }
