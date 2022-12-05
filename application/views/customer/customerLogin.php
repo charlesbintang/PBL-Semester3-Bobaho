@@ -1,26 +1,42 @@
 <?php
+error_reporting(0);
+session_start();
+$ingataku = "";
 $koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
 
-if (isset($_POST['signup'])) {
+if (isset($_POST['login'])) {
 
-    // filter data yang diinputkan
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-    // enkripsi password
-    $password = md5($_POST["password"]);
-
-    // menyiapkan query 
-    $sql = "INSERT INTO customer (id_customer, nama_customer, kata_sandi) 
-                VALUES (NULL, '$username', '$password');";
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
 
-    // eksekusi query untuk menyimpan ke database
-    $saved = mysqli_query($koneksi, $sql);
+    if ($username == '' or $password == '') {
+        echo "<script> 
+                alert('Silahkan masukkan username dan password Anda'); 
+                window.location = ''; 
+                </script>";
+    } else {
+        $query = "SELECT * FROM customer WHERE nama_customer = '$username'";
+        $result = mysqli_query($koneksi, $query);
+        $check = mysqli_fetch_array($result);
 
-    // jika query simpan berhasil, maka user sudah terdaftar
-    // maka alihkan ke halaman login
-    if ($saved) header("Location: index.php");
+        if ($check['nama_customer'] == '' || $check['kata_sandi'] != md5($password)) {
+            $err = 1;
+        }
+
+        if ($err != 1) {
+            $_SESSION['session_username'] = $username; //tersimpan dalam server
+            $_SESSION['session_password'] = md5($password);
+
+            redirect('menu');
+        } else {
+            echo "<script>
+                    alert('Username atau password salah');
+                    window.location = '';
+                    </script>";
+        }
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +46,7 @@ if (isset($_POST['signup'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up | Bobaho</title>
+    <title>Sign In | Bobaho</title>
 
     <style>
         body {
@@ -40,12 +56,16 @@ if (isset($_POST['signup'])) {
         }
 
         .MainContainer {
-            width: 350px;
-            height: 500px;
+            width: 80%;
+            height: 60%;
             border-radius: 45px;
             background-color: #D6D5D5;
+            position: absolute;
             margin: auto;
-            margin-top: 230px;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -111,10 +131,14 @@ if (isset($_POST['signup'])) {
             margin-top: -30px;
         }
 
+        p {
+            margin: 0px;
+        }
+
         @media all and (min-width: 700px) {
             .MainContainer {
-                width: 550px;
-                height: 700px;
+                width: 450px;
+                height: 600px;
             }
 
             #emaill {
@@ -132,8 +156,8 @@ if (isset($_POST['signup'])) {
 
 <body>
     <div class="MainContainer">
-        <img width="50px" height="56px" style="margin-top: 0px" src="aset boba/person.png" alt="">
-        SIGN UP
+        <img width="50px" height="56px" style="margin-top: 0px" src="<?= base_url('assets/'); ?>aset boba/person.png" alt="">
+        SIGN IN
 
         <form action="" method="post">
             <div class="input">
@@ -141,10 +165,15 @@ if (isset($_POST['signup'])) {
                 <input type="text" class="form-control" id="emaill" name="username" placeholder="Username">
                 <label class="form-label"></label>
                 <input type="password" class="form-control" id="emaill" name="password" style="margin-bottom: 10px;" placeholder="Password">
-                <button class="Button" type="submit" name="signup" value="signup" style="margin-top: 20px;">Sign Up</button>
+                <br>
+                <button class="Button" type="submit" name="login" value="Login" style="margin-top: 20px;">Sign In</button>
             </div>
         </form>
+        <hr>
+        <p align="center">Belum punya akun? <a href="daftar.php">Daftar di sini!</a></p>
+        <p align="center"><a href="<?= base_url('auth/login'); ?>">Login admin</a></p>
     </div>
+
 </body>
 
 </html>
