@@ -4,6 +4,16 @@ body {
   background: #69916f;
 }
 
+@media all and (min-width: 415px) {
+  .container {
+    width: 516px;
+  }
+
+  #btn-topping {
+    width: 475px;
+  }
+}
+
 .navbar>.container-fluid,
 .navbar>.container-lg,
 .navbar>.container-md,
@@ -66,13 +76,6 @@ body {
   color: #fff;
   background-color: #28533F;
   border-color: transparent;
-  border-radius: 15px;
-}
-
-.tablee {
-  color: #fff;
-  background-color: #28533F;
-  border-color: black;
   border-radius: 15px;
 }
 
