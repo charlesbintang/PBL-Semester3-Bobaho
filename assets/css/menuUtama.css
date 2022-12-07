@@ -4,6 +4,14 @@ body {
   background: #69916f;
 }
 
+@media all and (min-width: 700px) {
+  body {
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+    background: #69916f;
+  }
+}
+
 .navbar>.container-fluid,
 .navbar>.container-lg,
 .navbar>.container-md,
