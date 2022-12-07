@@ -43,7 +43,7 @@ $jumlahKategori = count($arrKategori);
 <body>
   <!-- Navbar -->
   <header>
-    <nav class="navbar navbar-expand-lg fixed-top bg-green">
+    <nav class="navbar navbar-expand-lg fixed-top bg-green" style="top: -8px;">
       <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url('menu'); ?>">Boba and Tea</a>
         <img src="<?= base_url('assets/'); ?>aset boba/logo bobaho.png" alt="tidak tersedia" width="98px" onclick="document.location.href = '<?= base_url('menu'); ?>'">

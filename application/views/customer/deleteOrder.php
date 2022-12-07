@@ -22,8 +22,31 @@ if ($_GET['del']) {
             document.location.href = '" . base_url('menu/cart') . "'
             </script>";
     }
-} else {
-    "<script>
+} //else {
+//     "<script>
+//             document.location.href = '" . base_url('menu/cart') . "'
+//             </script>";
+// }
+if ($_GET['delTop']) {
+    $hapusIdCart = $_GET['delTop'];
+    function hapus($hapusIdCart)
+    {
+        $koneksi = mysqli_connect("localhost", "root", "", "bobaho");
+        $sqlDelete = "UPDATE `membeli` SET `topping` = '', `extratopping` = '' WHERE `membeli`.`id_cart` = '$hapusIdCart';";
+        mysqli_query($koneksi, $sqlDelete);
+
+        return mysqli_affected_rows($koneksi);
+    }
+    if (hapus($hapusIdCart) > 0) {
+        echo
+        "<script>
             document.location.href = '" . base_url('menu/cart') . "'
             </script>";
+    } else {
+        echo
+        "<script>
+            alert('Pesanan gagal dihapus');
+            document.location.href = '" . base_url('menu/cart') . "'
+            </script>";
+    }
 }

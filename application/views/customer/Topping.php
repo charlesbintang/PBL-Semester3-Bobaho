@@ -33,7 +33,7 @@ if (isset($_POST['pilihTopping'])) {
     $rowIsi = mysqli_fetch_array($qryIsi);
     $isiTopping = $rowIsi['topping'];
 
-    $sqlTopping = "UPDATE `membeli` SET topping = '" . $isiTopping . $topping . "' WHERE `membeli`.`id_cart` = '$idcart' AND `membeli`.`id_customer` = '$idCustomer[id_customer]';";
+    $sqlTopping = "UPDATE `membeli` SET topping = '" . $isiTopping . $topping . "' WHERE `membeli`.`id_cart` = '$idcart';";
     $qryTopping = mysqli_query($koneksi, $sqlTopping);
     if ($qryTopping) {
         echo '
@@ -79,14 +79,20 @@ if (isset($_POST['pilihExtraTopping'])) {
     }
 }
 
-//konversi nilai string di table topping dan extra topping ke array
+//konversi nilai string dari db bobaho, table topping dan extra topping ke array
 $sqlKonversi = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]'; ";
 $qryKonversi = mysqli_query($koneksi, $sqlKonversi);
 $toppingExtraTopping = mysqli_fetch_array($qryKonversi);
 $arrTopping = explode(",", $toppingExtraTopping['topping']);
-// echo $arrTopping[0]; 
+$jumlahTopping = count($arrTopping);
 $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
-// echo $arrExtraTopping[0];
+$jumlahExTop = count($arrExtraTopping);
+//buat update harga jika tidak ada isi dari table topping dan extra topping
+if ($jumlahTopping == 1 && $jumlahExTop == 1) {
+    $updateHarga = "UPDATE `membeli` SET total_harga = harga WHERE `membeli`.`id_customer` = '$idCustomer[id_customer]';";
+    mysqli_query($koneksi, $updateHarga);
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -110,10 +116,10 @@ $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
 <body>
     <!-- Navbar -->
     <header>
-        <nav class="navbar fixed-top bg-green">
+        <nav class="navbar fixed-top bg-green" style="top: -8px;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="<?= base_url('menu'); ?>">Boba and Tea</a>
-                <img src="<?= base_url('assets/') ?>aset boba/logo bobaho.png" alt="tidak tersedia" width="98px" onclick="document.location.href ='<?= base_url('menu'); ?>'">
+                <img src="<?= base_url('assets/') ?>aset boba/logo bobaho.png" alt="tidak tersedia" width="98px" style="padding-top:2px;" onclick="document.location.href ='<?= base_url('menu'); ?>'">
 
                 <button type="button" class="btn btn-secondary" style="width: 80px; border-top-width: 0; padding-top: 0; padding-bottom: 0;" onclick="document.location.href= '<?= base_url('menu'); ?>'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80%" viewBox="0 0 24 24">
@@ -155,8 +161,37 @@ $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
                     </tr>
                     <tr>
                         <td></td>
-                        <td></td>
                     </tr>
+                    <tr>
+                        <td colspan="8" align="left">
+                            <?php
+                            if ($jumlahTopping == 1 && $jumlahExTop == 1) {
+                                echo "Tidak ada topping terpilih..";
+                            } else {
+                                if ($jumlahTopping > 1) { ?>
+                                    <span>Topping yang Anda pilih: </span>
+                                    <?php for ($i = 0; $i < $jumlahExTop; $i++) {
+                                        echo "<br>";
+                                        echo $arrTopping[$i];
+                                    }
+                                }
+                                if ($jumlahExTop > 1) { ?>
+                                    <span>Extra Topping yang Anda pilih: </span>
+                                    <?php for ($i = 0; $i < $jumlahExTop; $i++) {
+                                        echo "<br>";
+                                        echo $arrExtraTopping[$i];
+                                    } ?>
+                                <?php } ?>
+                                <br>
+                                <br>
+                                <div class="mx-auto" style="width: 185px;">
+                                    <button class="btn btn-danger"><a href="<?= base_url('menu/delete'); ?>?delTop=<?php echo $row['id_cart'] ?>" style="text-decoration:none; color:white;">Hapus Semua Topping</a></button>
+                                </div>
+                                <hr>
+                            <?php } ?>
+                        </td>
+                    </tr>
+
                     <tr>
                         <td colspan="4">
                             <p>
@@ -172,6 +207,7 @@ $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
                                 <div class="collapse" id="collapseExample<?php echo $row["id_cart"] ?>">
                                     <!-- Topping -->
                                     <table class="table">
+
                                         <tr>
                                             <td colspan="8" align="center">Pilihan <?php echo $x ?>:</td>
                                         </tr>
@@ -205,9 +241,7 @@ $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
                                                         <td>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="pilihTopping" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>," <?php if ($arrTopping[$y] == "Pilihan " . $x . ": " . $arrToppingAktif[$y] . "") {
-                                                                                                                                                                                                                                    echo "checked";
-                                                                                                                                                                                                                                } ?>>
+                                                                <input class="form-check-input" type="radio" name="pilihTopping" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
                                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                                 </label>
                                                             </div>
@@ -228,9 +262,7 @@ $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
                                                         <td>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="pilihExtraTopping[]" id="flexCheckDefault" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>," <?php if ($arrExtraTopping[$y] == "Pilihan " . $x . ": " . $arrToppingAktif[$y] . "") {
-                                                                                                                                                                                                                                            echo "checked";
-                                                                                                                                                                                                                                        } ?>>
+                                                                <input class="form-check-input" type="checkbox" name="pilihExtraTopping[]" id="flexCheckDefault" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
                                                                 <label class="form-check-label" for="flexCheckDefault">
                                                                 </label>
                                                             </div>
@@ -243,7 +275,14 @@ $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
                                                     <?php } ?>
                                                 </tr>
                                         </table>
-                                        <button type="submit">Tekan Aku jika sudah selesai memilih Topping!</button>
+                                        <div class="mx-auto" style="width: 95px;">
+                                            <button type="submit" class="btn btn-success">
+                                                Selesai
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                                                </svg>
+                                            </button>
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
