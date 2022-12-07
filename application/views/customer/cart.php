@@ -55,7 +55,7 @@ if (isset($_POST['pilihExtraTopping'])) {
     $qryIsi = mysqli_query($koneksi, $sqlIsi);
     $rowIsi = mysqli_fetch_array($qryIsi);
     $isiExtraTopping = $rowIsi['extratopping'];
-    $extraTopping = implode(",", $_POST['pilihExtraTopping']);
+    $extraTopping = implode($_POST['pilihExtraTopping']);
     $xharga = $_POST['pilihExtraTopping'];
     $yharga = count($xharga);
     $harga = 0;
@@ -63,7 +63,7 @@ if (isset($_POST['pilihExtraTopping'])) {
         $harga += 2;
     }
     $ubahHarga = $harga;
-    $sqlExtraTopping = "UPDATE `membeli` SET total_harga = total_harga + $ubahHarga, extratopping = '" . $isiExtraTopping . $extraTopping . "' WHERE `membeli`.`id_cart` = '$idcart' AND `membeli`.`id_customer` = '$idCustomer[id_customer]';";
+    $sqlExtraTopping = "UPDATE `membeli` SET total_harga = total_harga + $ubahHarga, extratopping = '" . $isiExtraTopping . $extraTopping . "' WHERE `membeli`.`id_cart` = '$idcart';";
     $qryExtraTopping = mysqli_query($koneksi, $sqlExtraTopping);
     if ($qryExtraTopping) {
         echo '
@@ -79,11 +79,12 @@ if (isset($_POST['pilihExtraTopping'])) {
     }
 }
 
-//konversi nilai string dari db bobaho, table topping dan extra topping ke array
+//konversi nilai string dari table topping dan extra topping ke array
 $sqlKonversi = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]'; ";
 $qryKonversi = mysqli_query($koneksi, $sqlKonversi);
 $toppingExtraTopping = mysqli_fetch_array($qryKonversi);
 $arrTopping = explode(",", $toppingExtraTopping['topping']);
+print_r($arrTopping);
 $jumlahTopping = count($arrTopping);
 $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
 $jumlahExTop = count($arrExtraTopping);
@@ -102,7 +103,7 @@ if ($jumlahTopping == 1 && $jumlahExTop == 1) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bobaho</title>
+    <title>Cart | Bobaho</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <!-- Google Font -->
@@ -168,27 +169,26 @@ if ($jumlahTopping == 1 && $jumlahExTop == 1) {
                             if ($jumlahTopping == 1 && $jumlahExTop == 1) {
                                 echo "Tidak ada topping terpilih..";
                             } else {
-                                if ($jumlahTopping > 1) { ?>
-                                    <span>Topping yang Anda pilih: </span>
-                                    <?php for ($i = 0; $i < $jumlahExTop; $i++) {
-                                        echo "<br>";
-                                        echo $arrTopping[$i];
+                                if ($jumlahTopping > 1) {
+                                    echo '<span>Topping yang Anda pilih: </span>';
+                                    for ($z = 0; $z < $jumlahTopping; $z++) {
+                                        echo "<br>" . $arrTopping[$z];
                                     }
                                 }
-                                if ($jumlahExTop > 1) { ?>
-                                    <span>Extra Topping yang Anda pilih: </span>
-                                    <?php for ($i = 0; $i < $jumlahExTop; $i++) {
+                                if ($jumlahExTop > 1) {
+                                    echo '<span>Extra Topping yang Anda pilih: </span>';
+                                    for ($w = 0; $w < $jumlahExTop; $w++) {
                                         echo "<br>";
-                                        echo $arrExtraTopping[$i];
-                                    } ?>
-                                <?php } ?>
-                                <br>
-                                <br>
+                                        echo $arrExtraTopping[$w];
+                                    }
+                                }
+                                echo '<br>
+
                                 <div class="mx-auto" style="width: 185px;">
-                                    <button class="btn btn-danger"><a href="<?= base_url('menu/delete'); ?>?delTop=<?php echo $row['id_cart'] ?>" style="text-decoration:none; color:white;">Hapus Semua Topping</a></button>
+                                    <button class="btn btn-danger"><a href="' . base_url('menu/delete') . '?delTop=' . $row['id_cart'] . '" style="text-decoration:none; color:white;">Hapus Semua Topping</a></button>
                                 </div>
-                                <hr>
-                            <?php } ?>
+                                <hr>';
+                            } ?>
                         </td>
                     </tr>
 
@@ -256,7 +256,7 @@ if ($jumlahTopping == 1 && $jumlahExTop == 1) {
                                                 </tr>
                                                 <!-- Extra Topping -->
                                                 <tr>
-                                                    <td colspan="8"> Extra Topping: +2K/Topping</td>
+                                                    <td colspan="8">Extra Topping: +2K/Topping</td>
                                                 </tr>
                                                 <tr align="center">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>

@@ -12,7 +12,7 @@ class menu extends CI_Controller
     public function cart()
     {
         error_reporting(0);
-        $this->load->view('customer/Topping');
+        $this->load->view('customer/cart');
     }
 
     public function add()
@@ -30,6 +30,12 @@ class menu extends CI_Controller
     public function note()
     {
         error_reporting(0);
-        $this->load->view('customer/');
+        $this->load->view('customer/note');
+    }
+
+    public function checkout()
+    {
+        error_reporting(0);
+        $this->load->view('customer/checkout');
     }
 }

@@ -32,7 +32,7 @@ if ($_GET['delTop']) {
     function hapus($hapusIdCart)
     {
         $koneksi = mysqli_connect("localhost", "root", "", "bobaho");
-        $sqlDelete = "UPDATE `membeli` SET `topping` = '', `extratopping` = '' WHERE `membeli`.`id_cart` = '$hapusIdCart';";
+        $sqlDelete = "UPDATE `membeli` SET `topping` = NULL, `extratopping` = NULL WHERE `membeli`.`id_cart` = '$hapusIdCart';";
         mysqli_query($koneksi, $sqlDelete);
 
         return mysqli_affected_rows($koneksi);
