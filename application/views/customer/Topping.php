@@ -305,7 +305,7 @@ if ($jumlahTopping == 1 && $jumlahExTop == 1) {
         ?>
         <nav class="navbar navbar-expand-lg fixed-bottom bg-green" style="padding-bottom: 0;">
             <div class="container-fluid" style="padding-right: 0;padding-left: 0;padding-bottom:0;">
-                <button type="button" class="btn btn-warning" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" onclick="document.location.href = 'barcode.php'">Bayar Sekarang <br>
+                <button type="button" class="btn btn-warning" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;" onclick="document.location.href = '<?= base_url('menu/note'); ?>'">Bayar Sekarang <br>
                     <h4><?php echo "Rp " . number_format($totalPembayaran, 3); ?></h4>
                 </button>
             </div>
