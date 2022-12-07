@@ -4,7 +4,7 @@ $koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
 if (isset($_POST['signup'])) {
 
     // filter data yang diinputkan
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+    $username = filter_input(INPUT_POST, 'username');
     // enkripsi password
     $password = md5($_POST["password"]);
 

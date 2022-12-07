@@ -4,13 +4,24 @@ session_start();
 error_reporting(0);
 date_default_timezone_set("Asia/Jakarta");
 if (!isset($_SESSION['session_username'])) {
-  header("location: login.php");
+  header("location: " . base_url() . "");
 }
+//dapatkan id_customer
 $koneksi = mysqli_connect("localhost", "root", "", "bobaho");
 $sesUnCus = $_SESSION['session_username'];
 $qry = "SELECT id_customer FROM customer WHERE nama_customer = '$sesUnCus';";
 $sqlIdCus = mysqli_query($koneksi, $qry);
 $idCustomer = mysqli_fetch_array($sqlIdCus);
+
+//tampilkan kategori yang ada
+$arrKategori = [];
+$sqlKategori = "SELECT DISTINCT kategori FROM `menu_costumer`;";
+$qryKategori = mysqli_query($koneksi, $sqlKategori);
+while ($kategori = mysqli_fetch_array($qryKategori)) {
+  $arrKategori[] = $kategori["kategori"];
+}
+$jumlahKategori = count($arrKategori);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,38 +45,19 @@ $idCustomer = mysqli_fetch_array($sqlIdCus);
   <header>
     <nav class="navbar navbar-expand-lg fixed-top bg-green">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">Boba and Tea</a>
-        <img src="<?= base_url('assets/'); ?>aset boba/logo bobaho.png" alt="tidak tersedia" width="25%" onclick="document.location.href = 'index.php'">
+        <a class="navbar-brand" href="<?= base_url('menu'); ?>">Boba and Tea</a>
+        <img src="<?= base_url('assets/'); ?>aset boba/logo bobaho.png" alt="tidak tersedia" width="98px" onclick="document.location.href = '<?= base_url('menu'); ?>'">
 
         <form class="d-flex" role="search" action="" method="get">
           <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search" value="<?php echo $_GET['search'] ?>">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <div class="wrapper-scroll">
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary" onclick="document.location.href = 'index.php?kat=Best%20Seller'">Best&nbsp;Seller</button><br>
-          </div>
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary" onclick="document.location.href = 'index.php?kat=New%20Series'">New&nbsp;Series</button><br>
-          </div>
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary" onclick="document.location.href = 'index.php?kat=Chocolate'">Chocolate</button>
-          </div>
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary">Coffee</button>
-          </div>
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary">Fruit&nbsp;&&nbsp;Smothies</button>
-          </div>
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary">Yakult</button>
-          </div>
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary">Mocktail</button>
-          </div>
-          <div class="wrapper-item">
-            <button type="button" class="btn btn-primary">Tea&nbsp;Series</button>
-          </div>
+          <?php for ($i = 0; $i < $jumlahKategori; $i++) { ?>
+            <div class="wrapper-item">
+              <button type="button" class="btn btn-primary" onclick="document.location.href = '<?= base_url('menu'); ?>?kat=<?= $arrKategori[$i]; ?>'"><?= $arrKategori[$i]; ?></button><br>
+            </div>
+          <?php } ?>
         </div>
       </div>
       </div>
@@ -103,7 +95,7 @@ $idCustomer = mysqli_fetch_array($sqlIdCus);
                 <span id="valueDisplay<?php echo $row['id_menu']; ?>" class="box">1</span>
                 <button id='increment<?php echo $row['id_menu']; ?>' class="btn btn-light" aria-hidden="true" onclick="displayIncrement<?php echo $row['id_menu']; ?>()">+</button>
 
-                <form action="addToCart.php" method="post">
+                <form action="<?= base_url('menu/add') ?>" method="post">
                   <input type="hidden" name="id_customer" value="<?php echo $idCustomer['id_customer'] ?>">
                   <input type="hidden" name="id_menu" value="<?php echo $row['id_menu'] ?>">
                   <input name="jumlah_pesanan" class="inputt" id="input<?php echo $row['id_menu']; ?>" type="hidden" value="1" aria-valuemin<?php echo $row['id_menu']; ?>="1" autocomplete="off" aria-valuemax<?php echo $row['id_menu']; ?>="100" aria-valuenow<?php echo $row['id_menu']; ?>="1" tabIndex="0">
@@ -291,21 +283,19 @@ $idCustomer = mysqli_fetch_array($sqlIdCus);
 
   <footer>
     <nav class="navbar navbar-expand-lg fixed-bottom bg-green">
-      <div class="container-fluid" style="padding-right: 0; padding-left: 0;">
-        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-          <!-- btn Home -->
-          <button type="button" class="btn btn-warning" onclick="document.location.href = 'index.php'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25%" viewBox="0 0 30 30">
-              <path fill="#000000" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
-            </svg>
-          </button>
-          <!-- btn Lihat Keranjang -->
-          <button type="button" class="btn btn-warning" onclick="document.location.href = 'Topping.php'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25%" viewBox="0 0 30 30">
-              <path fill="#000000" d="M10 0V4H8L12 8L16 4H14V0M1 2V4H3L6.6 11.6L5.2 14C5.1 14.3 5 14.6 5 15C5 16.1 5.9 17 7 17H19V15H7.4C7.3 15 7.2 14.9 7.2 14.8V14.7L8.1 13H15.5C16.2 13 16.9 12.6 17.2 12L21.1 5L19.4 4L15.5 11H8.5L4.3 2M7 18C5.9 18 5 18.9 5 20S5.9 22 7 22 9 21.1 9 20 8.1 18 7 18M17 18C15.9 18 15 18.9 15 20S15.9 22 17 22 19 21.1 19 20 18.1 18 17 18Z" />
-            </svg>
-          </button>
-        </div>
+      <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <!-- btn Home -->
+        <button type="button" class="btn btn-warning" onclick="document.location.href = '<?= base_url('menu'); ?>'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10rem" height="2rem" viewBox="0 0 30 30">
+            <path fill="#000000" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+          </svg>
+        </button>
+        <!-- btn Lihat Keranjang -->
+        <button type="button" class="btn btn-warning" onclick="document.location.href = '<?= base_url('menu/cart'); ?>'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10rem" height="2rem" viewBox="0 0 30 30">
+            <path fill="#000000" d="M10 0V4H8L12 8L16 4H14V0M1 2V4H3L6.6 11.6L5.2 14C5.1 14.3 5 14.6 5 15C5 16.1 5.9 17 7 17H19V15H7.4C7.3 15 7.2 14.9 7.2 14.8V14.7L8.1 13H15.5C16.2 13 16.9 12.6 17.2 12L21.1 5L19.4 4L15.5 11H8.5L4.3 2M7 18C5.9 18 5 18.9 5 20S5.9 22 7 22 9 21.1 9 20 8.1 18 7 18M17 18C15.9 18 15 18.9 15 20S15.9 22 17 22 19 21.1 19 20 18.1 18 17 18Z" />
+          </svg>
+        </button>
       </div>
     </nav>
   </footer>

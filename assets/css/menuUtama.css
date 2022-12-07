@@ -1,6 +1,6 @@
 body {
-  padding-top: 52%;
-  padding-bottom: 20%;
+  padding-top: 11rem;
+  padding-bottom: 3rem;
   background: #69916f;
 }
 
@@ -199,6 +199,7 @@ body {
   line-height: 50px;
   text-align: center;
   margin-right: 5px;
+  margin-left: 5px;
 }
 
 .btn-group {
@@ -222,11 +223,4 @@ body {
   margin: auto;
   width: 25%;
   margin-bottom: 10px;
-}
-
-@media all and (min-width: 414px) {
-  body {
-    width: 500px;
-    height: 600px;
-  }
 }
