@@ -26,4 +26,10 @@ class menu extends CI_Controller
         error_reporting(0);
         $this->load->view('customer/deleteOrder');
     }
+
+    public function note()
+    {
+        error_reporting(0);
+        $this->load->view('customer/');
+    }
 }
