@@ -13,6 +13,30 @@ $sqlIdCus = "SELECT id_customer FROM customer WHERE nama_customer = '$sesUnCus';
 $qryIdCus = mysqli_query($koneksi, $sqlIdCus);
 $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
+
+if (isset($_POST['submit'])) {
+    if (!isset($_FILES['gambar']['tmp_name'])) {
+        echo '<span style="color:red"><b><u><i>Pilih file gambar</i></u></b></span>';
+    } else {
+        $file_name = $_FILES['gambar']['name'];
+        $file_size = $_FILES['gambar']['size'];
+        $file_type = $_FILES['gambar']['type'];
+        if ($file_size < 2048000 and ($file_type == 'image/jpeg' or $file_type == 'image/png')) {
+            $image   = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
+            mysqli_query($koneksi, "insert into tb_gambar (gambar,nama_gambar,tipe_gambar,ukuran_gambar) values ('$image','$file_name','$file_type','$file_size')");
+            echo '
+            <script>
+            alert("Gambar sudah diupload");
+            document.location.href = "' . base_url('menu/checkout') . '";
+            </script>
+            ';
+            exit;
+        } else {
+            echo '<span style="color:red"><b><u><i>Ukuruan File / Tipe File Tidak Sesuai</i></u></b></span>';
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,10 +138,14 @@ $idCustomer = mysqli_fetch_array($qryIdCus);
     </div>
 
     <h3 style="display:flex; justify-content:center;">Sertakan bukti Screenshot-nya ya!</h3>
-    <div style="display:flex; justify-content:center;">
-        <input class="form-control" type="file" id="formFile">
-    </div>
-
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div style="display:flex; justify-content:center;">
+            <input name="gambar" type="file" required>
+        </div>
+        <div style="display:flex; justify-content:center; padding-top:10px;">
+            <input type="submit" name="submit" style="padding: 5px 15px;">
+        </div>
+    </form>
     <h3 style="display:flex; justify-content:center;">Atau Bayar Melalui Kasir</h3>
 
     <div class="bayartulisan">

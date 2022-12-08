@@ -80,11 +80,30 @@ if (isset($_POST['pilihExtraTopping'])) {
 }
 
 //konversi nilai string dari table topping dan extra topping ke array
-$sqlKonversi = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]'; ";
+$sqlIdCart = "SELECT id_cart FROM membeli WHERE id_customer = '$idCustomer[id_customer]'";
+$qryIdCart = mysqli_query($koneksi, $sqlIdCart);
+$idCartAktif = [];
+while ($rowIdCart = mysqli_fetch_array($qryIdCart)) {
+    $idCartAktif[] = $rowIdCart['id_cart'];
+}
+
+
+
+$sqlKonversi = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]';";
 $qryKonversi = mysqli_query($koneksi, $sqlKonversi);
 $toppingExtraTopping = mysqli_fetch_array($qryKonversi);
+// $arrTopping = [];
+// $jumlahTopping = [];
+// $arrExtraTopping = [];
+// $jumlahExTop = [];
+
+// while ($toppingExtraTopping = mysqli_fetch_array($qryKonversi)) {
+//     $arrTopping[] = explode(",", $toppingExtraTopping['topping']);
+//     $jumlahTopping[] = count($arrTopping);
+//     $arrExtraTopping[] = explode(",", $toppingExtraTopping['extratopping']);
+//     $jumlahExTop[] = count($arrExtraTopping);
+// }
 $arrTopping = explode(",", $toppingExtraTopping['topping']);
-print_r($arrTopping);
 $jumlahTopping = count($arrTopping);
 $arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
 $jumlahExTop = count($arrExtraTopping);
@@ -188,7 +207,8 @@ if ($jumlahTopping == 1 && $jumlahExTop == 1) {
                                     <button class="btn btn-danger"><a href="' . base_url('menu/delete') . '?delTop=' . $row['id_cart'] . '" style="text-decoration:none; color:white;">Hapus Semua Topping</a></button>
                                 </div>
                                 <hr>';
-                            } ?>
+                            }
+                            ?>
                         </td>
                     </tr>
 
@@ -284,6 +304,7 @@ if ($jumlahTopping == 1 && $jumlahExTop == 1) {
                                             </button>
                                         </div>
                                         </form>
+                                        <hr>
                                     </div>
                                 </div>
                             <?php   }  ?>
