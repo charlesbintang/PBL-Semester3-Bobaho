@@ -79,41 +79,6 @@ if (isset($_POST['pilihExtraTopping'])) {
     }
 }
 
-//konversi nilai string dari table topping dan extra topping ke array
-$sqlIdCart = "SELECT id_cart FROM membeli WHERE id_customer = '$idCustomer[id_customer]'";
-$qryIdCart = mysqli_query($koneksi, $sqlIdCart);
-$idCartAktif = [];
-while ($rowIdCart = mysqli_fetch_array($qryIdCart)) {
-    $idCartAktif[] = $rowIdCart['id_cart'];
-}
-
-
-
-$sqlKonversi = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]';";
-$qryKonversi = mysqli_query($koneksi, $sqlKonversi);
-$toppingExtraTopping = mysqli_fetch_array($qryKonversi);
-// $arrTopping = [];
-// $jumlahTopping = [];
-// $arrExtraTopping = [];
-// $jumlahExTop = [];
-
-// while ($toppingExtraTopping = mysqli_fetch_array($qryKonversi)) {
-//     $arrTopping[] = explode(",", $toppingExtraTopping['topping']);
-//     $jumlahTopping[] = count($arrTopping);
-//     $arrExtraTopping[] = explode(",", $toppingExtraTopping['extratopping']);
-//     $jumlahExTop[] = count($arrExtraTopping);
-// }
-$arrTopping = explode(",", $toppingExtraTopping['topping']);
-$jumlahTopping = count($arrTopping);
-$arrExtraTopping = explode(",", $toppingExtraTopping['extratopping']);
-$jumlahExTop = count($arrExtraTopping);
-//buat update harga jika tidak ada isi dari table topping dan extra topping
-if ($jumlahTopping == 1 && $jumlahExTop == 1) {
-    $updateHarga = "UPDATE `membeli` SET total_harga = harga WHERE `membeli`.`id_customer` = '$idCustomer[id_customer]';";
-    mysqli_query($koneksi, $updateHarga);
-}
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -185,6 +150,13 @@ if ($jumlahTopping == 1 && $jumlahExTop == 1) {
                     <tr>
                         <td colspan="8" align="left">
                             <?php
+                            //konversi nilai string dari table topping dan extra topping ke array
+                            $arrTopping = explode(",", $row['topping']);
+                            $jumlahTopping = count($arrTopping);
+                            $arrExtraTopping = explode(",", $row['extratopping']);
+                            $jumlahExTop = count($arrExtraTopping);
+
+                            //buat update harga jika tidak ada isi dari table topping dan extra topping
                             if ($jumlahTopping == 1 && $jumlahExTop == 1) {
                                 echo "Tidak ada topping terpilih..";
                             } else {
