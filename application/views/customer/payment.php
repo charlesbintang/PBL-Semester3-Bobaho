@@ -46,9 +46,12 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment | Bobaho</title>
+    <link rel="stylesheet" href="<?= base_url('assets/css/') ?>Topping.css">
+
     <style>
         body {
             background-color: #E3D9CF;
+            padding: 0 1rem;
         }
 
         header {
@@ -123,7 +126,14 @@ if (isset($_POST['submit'])) {
         h3 {
             font-family: Arial, Helvetica, sans-serif;
         }
+
+        .container {
+            margin-right: auto;
+            margin-left: auto;
+            width: 300px;
+        }
     </style>
+
 </head>
 
 <body>
@@ -132,6 +142,70 @@ if (isset($_POST['submit'])) {
         <img src="<?= base_url('assets/'); ?>aset boba/Judul.png" width="150px" id="Bobaandtea" alt="">
         <img src="<?= base_url('assets/'); ?>aset boba/logo.png" width="100px" id="ayam" alt="">
     </header>
+
+    <?php
+    // looping php, dibeli
+    $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
+    $result = mysqli_query($koneksi, $sqlMembeli);
+    while ($row = mysqli_fetch_array($result)) {
+    ?>
+        <div class="container">
+            <table class="table">
+                <tr>
+                    <td rowspan="2" style="width: 35%;" align="center">
+                        <img src="<?= base_url('assets/') ?>aset boba/1x/<?php echo $row["src_gambar"]; ?>" alt="..." width="50%">
+                    </td>
+                    <td rowspan="2" class="boba">
+                        <h6><?php echo $row["nama_produk"]; ?></h6> <img src="<?= base_url('assets/') ?>aset boba/bintang.png" alt="..." class="bintang" style="margin-bottom:-1px;">&nbsp;<?php echo $row["rating"]; ?>
+                    </td>
+                    <td style="padding-top:17px;">
+                        <span class="box">Rp&nbsp;<?php echo $row["total_harga"]; ?>.000</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="8" align="left">
+                        <?php
+                        //konversi nilai string dari table topping dan extra topping ke array
+                        $arrTopping = explode(",", $row['topping']);
+                        $jumlahTopping = count($arrTopping);
+                        $arrExtraTopping = explode(",", $row['extratopping']);
+                        $jumlahExTop = count($arrExtraTopping);
+
+                        //buat update harga jika tidak ada isi dari table topping dan extra topping
+                        if ($jumlahTopping == 1 && $jumlahExTop == 1) {
+                            echo "Tidak ada topping terpilih..";
+                        } else {
+                            if ($jumlahTopping > 1) {
+                                echo '<span>Topping yang Anda pilih: </span>';
+                                for ($z = 0; $z < $jumlahTopping; $z++) {
+                                    echo "<br>" . $arrTopping[$z];
+                                }
+                            }
+                            if ($jumlahExTop > 1) {
+                                echo '<span>Extra Topping yang Anda pilih: </span>';
+                                for ($w = 0; $w < $jumlahExTop; $w++) {
+                                    echo "<br>";
+                                    echo $arrExtraTopping[$w];
+                                }
+                            }
+                            echo '<br>
+
+                                <div class="mx-auto" style="width: 185px;">
+                                    <button class="btn btn-danger"><a href="' . base_url('menu/delete') . '?delTop=' . $row['id_cart'] . '" style="text-decoration:none; color:white;">Hapus Semua Topping</a></button>
+                                </div>
+                                <hr>';
+                        }
+                        ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    <?php } ?>
+
+
 
     <div id="barcode">
         <img height="400px" src="<?= base_url('assets/'); ?>aset boba/barcode.jpg" alt="">
