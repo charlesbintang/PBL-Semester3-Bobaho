@@ -15,17 +15,19 @@ $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
 //tampilkan boba yang aktif
-$arrToppingAktif = [];
-$sqlBobaAktif = "SELECT nama_produk FROM `menu_costumer` WHERE jenis_produk = 'topping' AND status_produk = '1';";
+$sqlBobaAktif = "SELECT * FROM `menu_costumer` WHERE jenis_produk = 'topping' AND status_produk = '1';";
 $qryBobaAktif = mysqli_query($koneksi, $sqlBobaAktif);
+$arrToppingAktif = [];
+$arrToppingBoba = [];
 while ($bobaAktif = mysqli_fetch_array($qryBobaAktif)) {
     $arrToppingAktif[] = $bobaAktif["nama_produk"];
+    $arrToppingBoba[] = $bobaAktif["src_gambar"];
 }
 $jumlahBoba = count($arrToppingAktif);
 
 
-//proses post untuk pilih Topping
 
+//proses post untuk pilih Topping
 if (isset($_POST['submit'])) {
     $idCart = $_POST['id_cart'];
 
@@ -203,20 +205,23 @@ if (isset($_POST['submit'])) {
                                                     <td colspan="8">Topping:</td>
                                                 </tr>
                                                 <!-- Bonus Topping  -->
-                                                <tr align="left">
+                                                <tr align="center">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="pilihTopping<?= $x ?>" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
-                                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                                </label>
-                                                            </div>
-                                                        </td>
+                                                        <td> <img src="<?= base_url('assets/aset boba/'), $arrToppingBoba[$y]; ?>" alt="..." width="30px"></td>
                                                     <?php } ?>
                                                 </tr>
-                                                <tr align="left">
+                                                <tr align="center">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
-                                                        <td><?php echo $arrToppingAktif[$y] ?></td>
+                                                        <td><?= $arrToppingAktif[$y]; ?></td>
+                                                    <?php } ?>
+                                                </tr>
+                                                <tr align="center">
+                                                    <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
+                                                        <td>
+                                                            <div class="mx-auto">
+                                                                <input class="form-check-input" type="radio" name="pilihTopping<?= $x ?>" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
+                                                            </div>
+                                                        </td>
                                                     <?php } ?>
                                                 </tr>
                                                 <!-- Extra Topping -->
@@ -225,18 +230,21 @@ if (isset($_POST['submit'])) {
                                                 </tr>
                                                 <tr align="center">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="pilihExtraTopping[]" id="flexCheckDefault" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
-                                                                <label class="form-check-label" for="flexCheckDefault">
-                                                                </label>
-                                                            </div>
-                                                        </td>
+                                                        <td> <img src="<?= base_url('assets/aset boba/'), $arrToppingBoba[$y]; ?>" alt="..." width="30px"></td>
                                                     <?php } ?>
                                                 </tr>
-                                                <tr align="left">
+                                                <tr align="center">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
-                                                        <td><?php echo $arrToppingAktif[$y]; ?></td>
+                                                        <td><?= $arrToppingAktif[$y]; ?></td>
+                                                    <?php } ?>
+                                                </tr>
+                                                <tr align="center">
+                                                    <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
+                                                        <td>
+                                                            <div class="mx-auto">
+                                                                <input class="form-check-input" type="checkbox" name="pilihExtraTopping[]" id="flexCheckDefault" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
+                                                            </div>
+                                                        </td>
                                                     <?php } ?>
                                                 </tr>
                                         </table>
@@ -279,7 +287,7 @@ if (isset($_POST['submit'])) {
         </nav>
     </footer>
 <?php } else { ?>
-    <p align="center">Keranjang Anda kosong! Silahkan kembali ke menu.</p>
+    <p align="center">Keranjang Anda kosong! Silahkan kembali ke <a href="<?= base_url('menu') ?>" style="color:#212529">menu</a>.</p>
 <?php } ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

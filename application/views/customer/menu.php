@@ -105,7 +105,7 @@ $jumlahKategori = count($arrKategori);
                   <!-- <input type="hidden" name="tanggal" value="<?php //echo date('d-m-Y'); 
                                                                   ?>"> -->
                   <button type="submit" name="submit" value="<?php //echo date('H:i:s'); 
-                                                              ?>" class="btn btn-warning" style="margin-top: 10px; display: flex; justify-content: center;">Masukkan Keranjang</button>
+                                                              ?>" class="btn btn-warning" style="margin-top: 10px; display: flex; justify-content: center;">Masukkan ke Keranjang</button>
                 </form>
                 <script>
                   let count<?php echo $row['id_menu']; ?> = 1;
