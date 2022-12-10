@@ -145,7 +145,7 @@ if (isset($_POST['pilihExtraTopping'])) {
                             <span class="box">Rp&nbsp;<?php echo $row["total_harga"]; ?>.000</span>
                         </td>
                         <td><br>
-                            <button class="btn btn-danger" onclick="return(confirm('Apakah Anda yakin?'))"><a href="<?= base_url('menu/delete'); ?>?del=<?php echo $row['id_cart'] ?>" style="text-decoration:none; color:white;">X</a></button>
+                            <button class="btn btn-danger" onclick="confirm('Apakah Anda yakin?') ? document.location.href = '<?= base_url('menu/delete') ?>?del=<?= $row['id_cart'] ?>' : ''">X</button>
                         </td>
                     </tr>
                     <tr>
