@@ -26,8 +26,8 @@ if (isset($_POST['submit'])) {
             mysqli_query($koneksi, "insert into tb_gambar (gambar,nama_gambar,tipe_gambar,ukuran_gambar) values ('$image','$file_name','$file_type','$file_size')");
             echo '
             <script>
-            alert("Gambar sudah diupload");
-            document.location.href = "' . base_url('menu/checkout') . '";
+            alert("Pesanan diterima");
+            document.location.href = "' . base_url('menu/verification') . '";
             </script>
             ';
             exit;
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | Bobaho</title>
+    <title>Payment | Bobaho</title>
     <style>
         body {
             background-color: #E3D9CF;
@@ -149,14 +149,14 @@ if (isset($_POST['submit'])) {
     <h3 style="display:flex; justify-content:center;">Atau Bayar Melalui Kasir</h3>
 
     <div class="bayartulisan">
-        <button id="bayar" type="button">Bayar Cash</button>
+        <button id="bayar" type="button" onclick="alert('Pesanan diterima'); document.location.href = '<?= base_url('menu/cash') ?>'">Bayar Cash</button>
     </div>
 
 
 
     <!-- tombol back -->
     <div>
-        <button class="tombolBack" type="button" onclick="document.location.href = 'Topping.php'">
+        <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu/note') ?>'">
             <span class="backButton">
                 <ion-icon name="arrow-round-back"></ion-icon>
             </span>

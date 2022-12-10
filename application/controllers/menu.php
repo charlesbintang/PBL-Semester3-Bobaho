@@ -33,9 +33,21 @@ class menu extends CI_Controller
         $this->load->view('customer/note');
     }
 
-    public function checkout()
+    public function payment()
     {
         error_reporting(0);
-        $this->load->view('customer/checkout');
+        $this->load->view('customer/payment');
+    }
+
+    public function verification()
+    {
+        error_reporting(0);
+        $this->load->view('customer/notifQRIS');
+    }
+
+    public function cash()
+    {
+        error_reporting(0);
+        $this->load->view('customer/notifCash');
     }
 }

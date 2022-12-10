@@ -25,15 +25,19 @@ $jumlahBoba = count($arrToppingAktif);
 
 
 //proses post untuk pilih Topping
-if (isset($_POST['pilihTopping'])) {
+
+if (isset($_POST['submit'])) {
     $idcart = $_POST['id_cart'];
-    $topping = $_POST['pilihTopping'];
     $sqlIsi = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]' AND id_cart = '$idcart' ";
     $qryIsi = mysqli_query($koneksi, $sqlIsi);
     $rowIsi = mysqli_fetch_array($qryIsi);
-    $isiTopping = $rowIsi['topping'];
+    $arrTopping = [];
+    for ($a = 1; $a <= $rowIsi["jumlah_pesanan"]; $a++) {
+        $arrTopping[] = $_POST['pilihTopping' . $a . ''];
+    }
+    $topping = implode($arrTopping);
 
-    $sqlTopping = "UPDATE `membeli` SET topping = '" . $isiTopping . $topping . "' WHERE `membeli`.`id_cart` = '$idcart';";
+    $sqlTopping = "UPDATE `membeli` SET topping = '" . $topping . "' WHERE `membeli`.`id_cart` = '$idcart';";
     $qryTopping = mysqli_query($koneksi, $sqlTopping);
     if ($qryTopping) {
         echo '
@@ -194,9 +198,9 @@ if (isset($_POST['pilihExtraTopping'])) {
                                     </svg>
                                 </button>
                             </p>
-                            <?php
-                            for ($x = 1; $x <= $row["jumlah_pesanan"]; $x++) { ?>
-                                <div class="collapse" id="collapseExample<?php echo $row["id_cart"] ?>">
+                            <div class="collapse" id="collapseExample<?php echo $row["id_cart"] ?>">
+                                <?php
+                                for ($x = 1; $x <= $row["jumlah_pesanan"]; $x++) { ?>
                                     <!-- Topping -->
                                     <table class="table">
 
@@ -219,7 +223,6 @@ if (isset($_POST['pilihExtraTopping'])) {
                                             </td>
                                         </tr>
                                     </table>
-
                                     <div class="collapse show" id="collapseTopping<?php echo $row["id_cart"];
                                                                                     echo $x; ?>">
                                         <table class="table">
@@ -233,14 +236,13 @@ if (isset($_POST['pilihExtraTopping'])) {
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
                                                         <td>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="pilihTopping" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
+                                                                <input class="form-check-input" type="radio" name="pilihTopping<?= $x ?>" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>," required>
                                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                                 </label>
                                                             </div>
                                                         </td>
                                                     <?php } ?>
                                                 </tr>
-
                                                 <tr align="left">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
                                                         <td><?php echo $arrToppingAktif[$y] ?></td>
@@ -267,19 +269,19 @@ if (isset($_POST['pilihExtraTopping'])) {
                                                     <?php } ?>
                                                 </tr>
                                         </table>
-                                        <div class="mx-auto" style="width: 95px;">
-                                            <button type="submit" class="btn btn-success">
-                                                Selesai
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
-                                                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        </form>
                                         <hr>
                                     </div>
+                                <?php   }  ?>
+                                <div class="mx-auto" style="width: 95px;">
+                                    <button type="submit" class="btn btn-success" name="submit">
+                                        Selesai
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                                        </svg>
+                                    </button>
                                 </div>
-                            <?php   }  ?>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 </table>

@@ -39,7 +39,7 @@ if ($_GET['delTop']) {
         $sqlDelete = "UPDATE `membeli` SET `topping` = NULL, `extratopping` = NULL WHERE `membeli`.`id_cart` = '$hapusIdCart';";
         mysqli_query($koneksi, $sqlDelete);
 
-        $updateHarga = "UPDATE `membeli` SET total_harga = harga WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "' AND `membeli`.`id_cart` = '" . $hapusIdCart . "';";
+        $updateHarga = "UPDATE `membeli` SET total_harga = harga * jumlah_pesanan WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "' AND `membeli`.`id_cart` = '" . $hapusIdCart . "';";
         mysqli_query($koneksi, $updateHarga);
 
         return mysqli_affected_rows($koneksi);

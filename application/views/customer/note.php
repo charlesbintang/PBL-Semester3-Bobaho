@@ -21,7 +21,7 @@ if (isset($_POST['form'])) {
     if ($qryKirim) {
         echo '
         <script>
-        document.location.href = "' . base_url('menu/checkout') . '";
+        document.location.href = "' . base_url('menu/payment') . '";
         </script>
         ';
     } else {
