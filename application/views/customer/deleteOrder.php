@@ -52,7 +52,6 @@ if ($_GET['delTop']) {
     } else {
         echo
         "<script>
-            alert('Pesanan gagal dihapus');
             document.location.href = '" . base_url('menu/cart') . "'
             </script>";
     }

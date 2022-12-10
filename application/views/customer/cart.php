@@ -27,8 +27,12 @@ $jumlahBoba = count($arrToppingAktif);
 //proses post untuk pilih Topping
 
 if (isset($_POST['submit'])) {
-    $idcart = $_POST['id_cart'];
-    $sqlIsi = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]' AND id_cart = '$idcart' ";
+    $idCart = $_POST['id_cart'];
+
+    $updateHarga = "UPDATE `membeli` SET total_harga = harga * jumlah_pesanan WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "' AND `membeli`.`id_cart` = '" . $idCart . "';";
+    mysqli_query($koneksi, $updateHarga);
+
+    $sqlIsi = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]' AND id_cart = '$idCart' ";
     $qryIsi = mysqli_query($koneksi, $sqlIsi);
     $rowIsi = mysqli_fetch_array($qryIsi);
     $arrTopping = [];
@@ -37,27 +41,6 @@ if (isset($_POST['submit'])) {
     }
     $topping = implode($arrTopping);
 
-    $sqlTopping = "UPDATE `membeli` SET topping = '" . $topping . "' WHERE `membeli`.`id_cart` = '$idcart';";
-    $qryTopping = mysqli_query($koneksi, $sqlTopping);
-    if ($qryTopping) {
-        echo '
-                <script> 
-                alert("Topping berhasil diperbarui!");
-                document.location.href = "' . base_url('menu/cart') . '";
-                </script>
-                ';
-    } else {
-        echo '
-                <script> alert("Topping gagal diperbarui..")</script>
-                ';
-    }
-}
-
-if (isset($_POST['pilihExtraTopping'])) {
-    $idcart = $_POST['id_cart'];
-    $sqlIsi = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]' AND id_cart = '$idcart' ";
-    $qryIsi = mysqli_query($koneksi, $sqlIsi);
-    $rowIsi = mysqli_fetch_array($qryIsi);
     $isiExtraTopping = $rowIsi['extratopping'];
     $extraTopping = implode($_POST['pilihExtraTopping']);
     $xharga = $_POST['pilihExtraTopping'];
@@ -67,20 +50,8 @@ if (isset($_POST['pilihExtraTopping'])) {
         $harga += 2;
     }
     $ubahHarga = $harga;
-    $sqlExtraTopping = "UPDATE `membeli` SET total_harga = total_harga + $ubahHarga, extratopping = '" . $isiExtraTopping . $extraTopping . "' WHERE `membeli`.`id_cart` = '$idcart';";
-    $qryExtraTopping = mysqli_query($koneksi, $sqlExtraTopping);
-    if ($qryExtraTopping) {
-        echo '
-            <script> 
-            alert("Extra Topping berhasil diperbarui!");
-            document.location.href = "' . base_url('menu/cart') . '";
-            </script>
-            ';
-    } else {
-        echo '
-            <script> alert("Extra Topping gagal diperbarui..")</script>
-            ';
-    }
+    $sqlTopping = "UPDATE `membeli` SET total_harga = total_harga + $ubahHarga, topping = '" . $topping . "', extratopping = '" . $extraTopping . "' WHERE `membeli`.`id_cart` = '$idCart';";
+    $qryExtraTopping = mysqli_query($koneksi, $sqlTopping);
 }
 
 ?>
@@ -236,7 +207,7 @@ if (isset($_POST['pilihExtraTopping'])) {
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
                                                         <td>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="pilihTopping<?= $x ?>" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>," required>
+                                                                <input class="form-check-input" type="radio" name="pilihTopping<?= $x ?>" id="flexRadioDefault1" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
                                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                                 </label>
                                                             </div>
