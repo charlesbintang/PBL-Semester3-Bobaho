@@ -15,8 +15,13 @@ $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
 //kode pesanan
-$kodepesanan = "A" . $idCustomer['id_customer'] . "";
+$sqlMembeli = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]'; ";
+$result = mysqli_query($koneksi, $sqlMembeli);
+$row = mysqli_fetch_array($result);
+$kodePesanan = "A" . $idCustomer['id_customer'] . "" . $row['id_cart'] . "";
 
+$sqlKirim = "UPDATE `membeli` SET catatan = '" . $row['catatan'] . ", " . $kodePesanan . "' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'";
+mysqli_query($koneksi, $sqlKirim);
 
 ?>
 <!DOCTYPE html>
@@ -130,13 +135,13 @@ $kodepesanan = "A" . $idCustomer['id_customer'] . "";
     <!-- isi pesan -->
     <div class="Pemberitahuan">
         <h1>Pesanan Anda diterima! </h1>
-        <p align="center">Namun Kami akan verifikasi terlebih dahulu. Jika sesuai akan langsung dibuat! Mohon menunggu. Kode pesanan Anda :<span id="kodepesanan"> <?= $kodepesanan; ?> </span> </p>
+        <p align="center">Namun Kami akan verifikasi terlebih dahulu. Jika sesuai akan langsung dibuat! Mohon menunggu. <br> Kode pesanan Anda :<span id="kodePesanan"> <?= $kodePesanan; ?> </span> </p>
         <p>Ditunggu pesanan selanjutnya!</p>
     </div>
 
     <footer class="Footer">
         <!-- tombol back -->
-        <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu/payment') ?>'">
+        <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu') ?>'">
             <span class="backButton">
                 <ion-icon name="arrow-round-back"></ion-icon>
             </span>

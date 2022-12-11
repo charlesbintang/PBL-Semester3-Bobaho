@@ -132,6 +132,12 @@ if (isset($_POST['submit'])) {
             margin-left: auto;
             width: 300px;
         }
+
+        .totalBelanja {
+            margin-right: auto;
+            margin-left: auto;
+            width: 170px;
+        }
     </style>
 
 </head>
@@ -144,7 +150,9 @@ if (isset($_POST['submit'])) {
     </header>
 
     <?php
+
     // looping php, dibeli
+    $totalPembayaran = 0;
     $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
     $result = mysqli_query($koneksi, $sqlMembeli);
     while ($row = mysqli_fetch_array($result)) {
@@ -166,7 +174,7 @@ if (isset($_POST['submit'])) {
                     <td></td>
                 </tr>
                 <tr>
-                    <td colspan="8" align="left">
+                    <td colspan="8" align="left" style="padding-left: 10px; padding-bottom:10px;">
                         <?php
                         //konversi nilai string dari table topping dan extra topping ke array
                         $arrTopping = explode(",", $row['topping']);
@@ -191,21 +199,18 @@ if (isset($_POST['submit'])) {
                                     echo $arrExtraTopping[$w];
                                 }
                             }
-                            echo '<br>
-
-                                <div class="mx-auto" style="width: 185px;">
-                                    <button class="btn btn-danger"><a href="' . base_url('menu/delete') . '?delTop=' . $row['id_cart'] . '" style="text-decoration:none; color:white;">Hapus Semua Topping</a></button>
-                                </div>
-                                <hr>';
                         }
                         ?>
                     </td>
                 </tr>
             </table>
         </div>
-    <?php } ?>
+    <?php $totalPembayaran += $row["total_harga"];
+    } ?>
 
+    <h4 style="display:flex; justify-content:center;">Total Belanja: <?php echo "Rp " . number_format($totalPembayaran, 3); ?></h4>
 
+    <h3 style="display:flex; justify-content:center;">Silahkan Bayar Melalui QRIS</h3>
 
     <div id="barcode">
         <img height="400px" src="<?= base_url('assets/'); ?>aset boba/barcode.jpg" alt="">

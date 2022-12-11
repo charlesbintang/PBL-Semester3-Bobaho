@@ -15,7 +15,10 @@ $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
 //kode pesanan
-$kodepesanan = "B" . $idCustomer['id_customer'] . "";
+$sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
+$result = mysqli_query($koneksi, $sqlMembeli);
+$row = mysqli_fetch_array($result);
+$kodePesanan = "B" . $idCustomer['id_customer'] . "" . $row['id_cart'] . "";
 
 ?>
 <!DOCTYPE html>
@@ -115,7 +118,7 @@ $kodepesanan = "B" . $idCustomer['id_customer'] . "";
 
     <div class="Pemberitahuan">
         <h1>Pemesanan Berhasil !</h1>
-        <span id="kodepesanan">Kode pesanan Anda : <?= $kodepesanan; ?> </span>
+        <span id="kodePesanan">Kode pesanan Anda : <?= $kodePesanan; ?> </span>
         <br>
         <span align="center">Silahkan melakukan Pembayaran ke kasir dan menunjukkan kode pesanan.</span>
         <p>Terima kasih sudah memesan! </p>
@@ -124,7 +127,7 @@ $kodepesanan = "B" . $idCustomer['id_customer'] . "";
     <footer class="Footer">
         <!-- tombol back -->
         <div>
-            <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu/payment') ?>'">
+            <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu') ?>'">
                 <span class="backButton">
                     <ion-icon name="arrow-round-back"></ion-icon>
                 </span>
