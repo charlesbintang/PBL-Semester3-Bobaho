@@ -186,16 +186,13 @@ if (isset($_POST['submit'])) {
                             echo "Tidak ada topping terpilih..";
                         } else {
                             if ($jumlahTopping > 1) {
-                                echo '<span>Topping yang Anda pilih: </span>';
                                 for ($z = 0; $z < $jumlahTopping; $z++) {
-                                    echo "<br>" . $arrTopping[$z];
+                                    echo $arrTopping[$z] . "<br>";
                                 }
                             }
                             if ($jumlahExTop > 1) {
-                                echo '<span>Extra Topping yang Anda pilih: </span>';
                                 for ($w = 0; $w < $jumlahExTop; $w++) {
-                                    echo "<br>";
-                                    echo $arrExtraTopping[$w];
+                                    echo $arrExtraTopping[$w] . "<br>";
                                 }
                             }
                         }

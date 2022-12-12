@@ -139,20 +139,16 @@ if (isset($_POST['submit'])) {
                                 echo "Tidak ada topping terpilih..";
                             } else {
                                 if ($jumlahTopping > 1) {
-                                    echo '<span>Topping yang Anda pilih: </span>';
                                     for ($z = 0; $z < $jumlahTopping; $z++) {
-                                        echo "<br>" . $arrTopping[$z];
+                                        echo $arrTopping[$z] . "<br>";
                                     }
                                 }
                                 if ($jumlahExTop > 1) {
-                                    echo '<span>Extra Topping yang Anda pilih: </span>';
                                     for ($w = 0; $w < $jumlahExTop; $w++) {
-                                        echo "<br>";
-                                        echo $arrExtraTopping[$w];
+                                        echo $arrExtraTopping[$w] . "<br>";
                                     }
                                 }
-                                echo '<br>
-
+                                echo '
                                 <div class="mx-auto" style="width: 185px;">
                                     <button class="btn btn-danger"><a href="' . base_url('menu/delete') . '?delTop=' . $row['id_cart'] . '" style="text-decoration:none; color:white;">Hapus Semua Topping</a></button>
                                 </div>
@@ -243,7 +239,7 @@ if (isset($_POST['submit'])) {
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
                                                         <td>
                                                             <div class="mx-auto">
-                                                                <input class="form-check-input" type="checkbox" name="pilihExtraTopping[]" id="flexCheckDefault" value="Pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
+                                                                <input class="form-check-input" type="checkbox" name="pilihExtraTopping[]" id="flexCheckDefault" value="Extra topping pilihan <?php echo $x ?>: <?php echo $arrToppingAktif[$y] ?>,">
                                                             </div>
                                                         </td>
                                                     <?php } ?>
