@@ -42,18 +42,19 @@ if (isset($_POST['submit'])) {
         $arrTopping[] = $_POST['pilihTopping' . $a . ''];
     }
     $topping = implode($arrTopping);
-
-    $isiExtraTopping = $rowIsi['extratopping'];
-    $extraTopping = implode($_POST['pilihExtraTopping']);
-    $xharga = $_POST['pilihExtraTopping'];
-    $yharga = count($xharga);
-    $harga = 0;
-    for ($i = 1; $i <= $yharga; $i++) {
-        $harga += 2;
+    if ($topping) {
+        $isiExtraTopping = $rowIsi['extratopping'];
+        $extraTopping = implode($_POST['pilihExtraTopping']);
+        $xharga = $_POST['pilihExtraTopping'];
+        $yharga = count($xharga);
+        $harga = 0;
+        for ($i = 1; $i <= $yharga; $i++) {
+            $harga += 2;
+        }
+        $ubahHarga = $harga;
+        $sqlTopping = "UPDATE `membeli` SET total_harga = total_harga + $ubahHarga, topping = '" . $topping . "', extratopping = '" . $extraTopping . "' WHERE `membeli`.`id_cart` = '$idCart';";
+        $qryExtraTopping = mysqli_query($koneksi, $sqlTopping);
     }
-    $ubahHarga = $harga;
-    $sqlTopping = "UPDATE `membeli` SET total_harga = total_harga + $ubahHarga, topping = '" . $topping . "', extratopping = '" . $extraTopping . "' WHERE `membeli`.`id_cart` = '$idCart';";
-    $qryExtraTopping = mysqli_query($koneksi, $sqlTopping);
 }
 
 ?>
