@@ -18,12 +18,11 @@ if (isset($_POST['submit'])) {
     if (!isset($_FILES['gambar']['tmp_name'])) {
         echo '<span style="color:red"><b><u><i>Pilih file gambar</i></u></b></span>';
     } else {
-        $file_name = $_FILES['gambar']['name'];
         $file_size = $_FILES['gambar']['size'];
         $file_type = $_FILES['gambar']['type'];
         if ($file_size < 2048000 and ($file_type == 'image/jpeg' or $file_type == 'image/png')) {
             $image   = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
-            mysqli_query($koneksi, "insert into tb_gambar (gambar,nama_gambar,tipe_gambar,ukuran_gambar) values ('$image','$file_name','$file_type','$file_size')");
+            mysqli_query($koneksi, "UPDATE `membeli` SET gambar = '$image', tipe_gambar = '$file_type' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'");
             echo '
             <script>
             alert("Pesanan diterima");

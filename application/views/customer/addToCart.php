@@ -7,7 +7,7 @@ $qryIdCus = mysqli_query($koneksi, $sqlIdCus);
 $idCustomer = mysqli_fetch_array($qryIdCus);
 
 
-if(!$koneksi){
+if (!$koneksi) {
   die("Gagal terhubung dengan database : " . mysqli_connect_error());
 }
 
@@ -24,35 +24,33 @@ $query = "INSERT INTO `membeli` (`id_customer`, `id_menu`, `jumlah_pesanan`, `ha
 
 $saved = mysqli_query($koneksi, $query);
 
-if ($saved){
+if ($saved == false) {
   echo '
-  <script> 
-  alert("Pesanan telah ditambahkan ke keranjang!");
-  document.location.href = "'.base_url('menu').'";
+  <script> alert("Pesanan gagal ditambahkan ke keranjang. Silahkan ulangi");
+  document.location.href = "' . base_url("menu") . '";
   </script>
-
-  '; 
-} else {
-  echo '
-  <script> alert("Pesanan gagal ditambahkan ke keranjang..")</script>
-  ';
-}
-
-//update total harga pesanan
-$updateTotalHarga = "UPDATE `membeli` SET `total_harga` = `harga` * `jumlah_pesanan` WHERE id_customer = '$idCustomer[id_customer]'; ";
-$updateToHar = mysqli_query($koneksi, $updateTotalHarga);
-
-if ($updateToHar){
-  echo '
-  <script> 
-  alert("Harga telah diperbarui!");
-  </script>
-
   ';
   exit;
 } else {
-  echo '
-  <script> alert("Harga gagal diperbarui..")</script>
-  ';
-  exit;
+  //update total harga pesanan
+  $updateTotalHarga = "UPDATE `membeli` SET `total_harga` = `harga` * `jumlah_pesanan` WHERE id_customer = '$idCustomer[id_customer]'; ";
+  $updateToHar = mysqli_query($koneksi, $updateTotalHarga);
+
+  if ($updateToHar) {
+    echo '
+    <script> 
+    alert("Pesanan berhasil ditambahkan ke keranjang!")
+    document.location.href = "' . base_url("menu") . '"; 
+    </script>
+    ';
+    exit;
+  } else {
+    echo '
+    <script> 
+    alert("Harga gagal diperbarui. Silahkan ulangi pemesanan");
+    document.location.href = "' . base_url("menu") . '"; 
+    </script>
+    ';
+    exit;
+  }
 }

@@ -19,9 +19,14 @@ $sqlMembeli = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_custome
 $result = mysqli_query($koneksi, $sqlMembeli);
 $row = mysqli_fetch_array($result);
 $kodePesanan = "A" . $idCustomer['id_customer'] . "" . $row['id_cart'] . "";
-
 $sqlKirim = "UPDATE `membeli` SET catatan = '" . $row['catatan'] . ", " . $kodePesanan . "' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'";
 mysqli_query($koneksi, $sqlKirim);
+
+//duplikasi isi tabel dan pindahkan ke tabel dibayar
+$sqlDibayar = "INSERT INTO dibayar SELECT * FROM membeli WHERE `membeli`.`id_customer` = '$idCustomer[id_customer]';";
+mysqli_query($koneksi, $sqlDibayar);
+$sqlHapus = "DELETE FROM membeli WHERE `membeli`.`id_customer` = '$idCustomer[id_customer]';";
+mysqli_query($koneksi, $sqlHapus);
 
 ?>
 <!DOCTYPE html>
