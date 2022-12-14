@@ -62,7 +62,7 @@
         </div>
         <div class="row">
             <div class="cold-md">
-                <a href="<?= base_url('user/tambah_produk/'); ?>halamantambah.php" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
+                <a href="<?= base_url('user/tambah_produk/'); ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
                 <a href="tmbhtoping.php" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Ubah Status Produk</a>
             </div>
             <br> <br>

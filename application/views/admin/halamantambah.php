@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
     <!-- Own CSS -->
-    <link rel="stylesheet" href="css/tambah.css?v=0.0.2">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/style.css?v=0.0.4">
     <title>Tambah | Daftar Menu | CRUD PHP</title>
 </head>
 
@@ -55,24 +55,40 @@
             <div class="col-md">
                 <form action="<?= base_url('user/tambah') ?>" method="post">
                     <div class="mb-3">
-                        <label for="id" class="form-label">ID Produk</label>
-                        <input type="text" class="form-control w-50" name="id" placeholder="ID Produk" autocomplete="off" required>
-
-                        <div class="mb-3">
-                            <label for="nama" class="form-label">Nama Produk</label>
-                            <input type="text" class="form-control w-50" name="nama" placeholder="Nama Produk" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="Harga" class="form-label">Harga Produk</label>
-                            <input type="text" class="form-control w-50" name="harga" placeholder="Harga Produk" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="Catatan" class="form-label">Catatan</label>
-                            <textarea class="form-control w-50" name="catatan" rows="3" placeholder="Catatan"></textarea>
-                        </div>
-                        <hr>
-                        <a href="login.php" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" name="submit" class="btn btn-primary m-2">Simpan</button>
+                        <label for="nama" class="form-label">Source Gambar</label>
+                        <input type="text" class="form-control w-50" name="source" placeholder="Source Gambar" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Harga" class="form-label">Jenis Produk</label>
+                        <input type="text" class="form-control w-50" name="jenis" placeholder="Jenis Produk" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Harga" class="form-label">Kategori</label>
+                        <input type="text" class="form-control w-50" name="kategori" placeholder="Kategori" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Harga" class="form-label">Nama Produk</label>
+                        <input type="text" class="form-control w-50" name="nama" placeholder="Nama Produk" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Harga" class="form-label">Harga</label>
+                        <input type="text" class="form-control w-50" name="harga" placeholder="Harga" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Harga" class="form-label">Rating</label>
+                        <input type="text" class="form-control w-50" name="rating" placeholder="Rating" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Catatan" class="form-label">Catatan</label>
+                        <textarea class="form-control w-50" name="catatan" rows="3" placeholder="Catatan"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Harga" class="form-label">Status Produk</label>
+                        <input type="text" class="form-control w-50" name="status" placeholder="Status Produk" autocomplete="off" required>
+                    </div>
+                    <hr>
+                    <a href="<?= base_url('user') ?>" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" name="submit" class="btn btn-primary m-2">Simpan</button>
                 </form>
             </div>
         </div>

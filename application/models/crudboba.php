@@ -11,7 +11,7 @@ class crudboba extends CI_Model
 
     function insertDataBoba($data)
     {
-        $this->db->insert('crud', $data);
+        $this->db->insert('menu_costumer', $data);
     }
 
     function getDataBobaDetail($id_produk)

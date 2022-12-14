@@ -34,15 +34,25 @@ class user extends CI_Controller
     public function tambah()
     {
         $id = $this->input->post('id');
+        $source = $this->input->post('source');
+        $jenis = $this->input->post('jenis');
+        $kategori = $this->input->post('kategori');
         $nama = $this->input->post('nama');
         $harga = $this->input->post('harga');
+        $rating = $this->input->post('rating');
         $catatan = $this->input->post('catatan');
+        $status = $this->input->post('status');
 
         $ArrInsert = array(
-            'id_produk' => $id,
+            'id_menu' => '',
+            'src_gambar' => $source,
+            'jenis_produk' => $jenis,
+            'kategori' => $kategori,
             'nama_produk' => $nama,
-            'harga_produk' => $harga,
-            'catatan' => $catatan
+            'harga' => $harga,
+            'rating' => $rating,
+            'catatan' => $catatan,
+            'status_produk' => $status
         );
 
         $this->crudboba->insertDataBoba($ArrInsert);
