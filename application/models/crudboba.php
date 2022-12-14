@@ -5,7 +5,7 @@ class crudboba extends CI_Model
 {
     function getDataBoba()
     {
-        $query = $this->db->get('crud');
+        $query = $this->db->get('menu_costumer');
         return $query->result();
     }
 

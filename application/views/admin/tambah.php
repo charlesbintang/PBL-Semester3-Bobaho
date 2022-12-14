@@ -10,6 +10,7 @@
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <!-- DataTables css -->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
@@ -19,6 +20,18 @@
     <!-- Own CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/style.css?v=0.0.4">
     <title>Daftar Menu | CRUD PHP</title>
+
+    <style>
+        select.input-sm {
+            height: 38px;
+            line-height: 30px;
+        }
+
+        .child {
+            color: white;
+            background-color: #28533f;
+        }
+    </style>
 </head>
 
 <body>
@@ -52,31 +65,67 @@
                 <a href="<?= base_url('user/tambah_produk/'); ?>halamantambah.php" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
                 <a href="tmbhtoping.php" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Ubah Status Produk</a>
             </div>
-            <table id="tabel-data" class="display nowrap table-striped table-bordered table" style="width:100%; color:white; margin-top: 20px;">
+            <br> <br>
+            <table id="tabel-data" class="display nowrap table-striped table-bordered table" style="width:100%; color:white;">
                 <thead>
                     <tr>
-                        <th>id_menu</th>
-                        <th>nama_produk</th>
-                        <th>harga</th>
-                        <th>catatan</th>
-                        <th>Status</th>
+                        <th>ID Menu</th>
+                        <th>Source Gambar</th>
+                        <th>Jenis Produk</th>
+                        <th>Kategori</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Rating</th>
+                        <th>Catatan</th>
+                        <th>Status Produk</th>
+                        <th>Aksi Update</th>
+                        <th>Aksi Delete</th>
                     </tr>
+                </thead>
+                <tbody>
                     <?php
                     foreach ($queryAB as $row) {
                     ?>
                         <tr>
-                            <td><?= $row->id_produk ?></td>
+                            <td><?= $row->id_menu ?></td>
+                            <td><?= $row->src_gambar ?></td>
+                            <td><?= $row->jenis_produk ?></td>
+                            <td><?= $row->kategori ?></td>
                             <td><?= $row->nama_produk ?></td>
-                            <td><?= $row->harga_produk ?></td>
+                            <td><?= $row->harga ?></td>
+                            <td><?= $row->rating ?></td>
                             <td><?= $row->catatan ?></td>
-                            <td><a href="<?= base_url('user/edit_produk'); ?>/<?= $row->id_produk ?>">Update</a> | <a href="<?= base_url('user/fungsi_delete') ?>/<?= $row->id_produk ?>">Delete</a>
+                            <td><?= $row->status_produk ?></td>
+                            <td><a href="<?= base_url('user/edit_produk'); ?>/<?= $row->id_menu ?>">Update</a></td>
+                            <td><a href="<?= base_url('user/fungsi_delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
                         </tr>
                     <?php } ?>
-                </thead>
+                </tbody>
             </table>
         </div>
     </div>
     <!-- Close Container -->
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var table = $('#tabel-data').DataTable({
+                responsive: true
+            });
+
+            new $.fn.dataTable.FixedHeader(table);
+        });
+    </script>
+
+
+
+
+
 
 
 </body>
