@@ -222,7 +222,7 @@ if (isset($_POST['submit'])) {
         <h3 style="display:flex; justify-content:center;">Sertakan bukti Screenshot-nya ya!</h3>
         <form action="" method="POST" enctype="multipart/form-data">
             <div style="display:flex; justify-content:center;">
-                <input name="gambar" type="file" required>
+                <input name="gambar" type="file" accept=".jpg" required>
             </div>
             <div style="display:flex; justify-content:center; padding-top:10px;">
                 <input type="submit" name="submit" style="padding: 5px 15px;">

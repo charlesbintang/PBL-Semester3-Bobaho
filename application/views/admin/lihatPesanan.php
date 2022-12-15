@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- Own CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/style.css?v=0.0.4">
-    <title>Daftar Menu | Admin</title>
+    <title>Daftar Pesanan | Admin</title>
 
     <style>
         select.input-sm {
@@ -63,7 +63,6 @@
                         <tr>
                             <th>Kode Pesanan</th>
                             <th>Nama Customer</th>
-                            <th>Posisi Customer</th>
                             <th>Catatan Customer</th>
                             <th>ID Menu</th>
                             <th>Harga</th>
@@ -76,20 +75,25 @@
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($queryAB as $row) {
+                        foreach ($qryPesanan as $row) {
                         ?>
                             <tr>
+                                <td><?php $arrCatatan = $row->catatan;
+                                    $catatan = explode(" | ", $arrCatatan);
+                                    echo $catatan[2];    ?></td>
+                                <td><?= $catatan[0] ?></td>
+                                <td><?= $catatan[1] ?></td>
                                 <td><?= $row->id_menu ?></td>
-                                <td><?= $row->src_gambar ?></td>
-                                <td><?= $row->jenis_produk ?></td>
-                                <td><?= $row->kategori ?></td>
-                                <td><?= $row->nama_produk ?></td>
                                 <td><?= $row->harga ?></td>
-                                <td><?= $row->rating ?></td>
-                                <td><?= $row->catatan ?></td>
-                                <td><?= $row->status_produk ?></td>
-                                <td><a href="<?= base_url('admin/ubah'); ?>/<?= $row->id_menu ?>">Update</a></td>
-                                <td><a href="<?= base_url('admin/delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
+                                <td><?= $row->jumlah_pesanan ?></td>
+                                <td><?= $row->topping ?></td>
+                                <td><?= $row->extratopping ?></td>
+                                <td><?= $row->total_harga ?></td>
+                                <td><?php $bayar = $row->gambar;
+                                    if ($bayar == NULL) {
+                                        echo 'CASH';
+                                    } ?></td>
+
                             </tr>
                         <?php } ?>
                     </tbody>
