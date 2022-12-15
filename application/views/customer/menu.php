@@ -284,15 +284,15 @@ $jumlahKategori = count($arrKategori);
   <footer>
     <nav class="navbar navbar-expand-lg fixed-bottom bg-green">
       <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-        <!-- btn Home -->
-        <button type="button" class="btn btn-warning" onclick="document.location.href = '<?= base_url('menu'); ?>'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="10rem" height="2rem" viewBox="0 0 30 30">
-            <path fill="#000000" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+        <!-- btn log out -->
+        <button type="button" class="btn btn-warning" onclick="document.location.href = '<?= base_url(); ?>'">
+          <svg style="width:10rem;height:2rem" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z" />
           </svg>
         </button>
         <!-- btn Lihat Keranjang -->
         <button type="button" class="btn btn-warning" onclick="document.location.href = '<?= base_url('menu/cart'); ?>'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="10rem" height="2rem" viewBox="0 0 30 30">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10rem" height="2rem" viewBox="0 0 24 24">
             <path fill="#000000" d="M10 0V4H8L12 8L16 4H14V0M1 2V4H3L6.6 11.6L5.2 14C5.1 14.3 5 14.6 5 15C5 16.1 5.9 17 7 17H19V15H7.4C7.3 15 7.2 14.9 7.2 14.8V14.7L8.1 13H15.5C16.2 13 16.9 12.6 17.2 12L21.1 5L19.4 4L15.5 11H8.5L4.3 2M7 18C5.9 18 5 18.9 5 20S5.9 22 7 22 9 21.1 9 20 8.1 18 7 18M17 18C15.9 18 15 18.9 15 20S15.9 22 17 22 19 21.1 19 20 18.1 18 17 18Z" />
           </svg>
         </button>

@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <!-- Google Font -->
@@ -27,9 +27,8 @@
             line-height: 30px;
         }
 
-        .child {
-            color: white;
-            background-color: #28533f;
+        .navbar-nav {
+            margin: 4px 0px;
         }
     </style>
 </head>
@@ -39,13 +38,12 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-uppercase">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url('admin') ?>">Admin</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('auth') ?>">Logout</a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('auth') ?>">Logout</a>
+                </li>
+            </ul>
+        </div>
         </div>
     </nav>
     <!-- Close Navbar -->
@@ -63,42 +61,44 @@
                 <a href="tmbhtoping.php" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Ubah Status Produk</a>
             </div>
             <br> <br>
-            <table id="tabel-data" class="display nowrap table-striped table-bordered table" style="width:100%; color:white;">
-                <thead>
-                    <tr>
-                        <th>ID Menu</th>
-                        <th>Source Gambar</th>
-                        <th>Jenis Produk</th>
-                        <th>Kategori</th>
-                        <th>Nama Produk</th>
-                        <th>Harga</th>
-                        <th>Rating</th>
-                        <th>Catatan</th>
-                        <th>Status Produk</th>
-                        <th>Aksi Update</th>
-                        <th>Aksi Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach ($queryAB as $row) {
-                    ?>
+            <div id="tabel">
+                <table id="tabel-data" class="display nowrap table-striped table-bordered table" style="width:100%; color:white;">
+                    <thead>
                         <tr>
-                            <td><?= $row->id_menu ?></td>
-                            <td><?= $row->src_gambar ?></td>
-                            <td><?= $row->jenis_produk ?></td>
-                            <td><?= $row->kategori ?></td>
-                            <td><?= $row->nama_produk ?></td>
-                            <td><?= $row->harga ?></td>
-                            <td><?= $row->rating ?></td>
-                            <td><?= $row->catatan ?></td>
-                            <td><?= $row->status_produk ?></td>
-                            <td><a href="<?= base_url('admin/edit_produk'); ?>/<?= $row->id_menu ?>">Update</a></td>
-                            <td><a href="<?= base_url('admin/fungsi_delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
+                            <th>ID Menu</th>
+                            <th>Source Gambar</th>
+                            <th>Jenis Produk</th>
+                            <th>Kategori</th>
+                            <th>Nama Produk</th>
+                            <th>Harga</th>
+                            <th>Rating</th>
+                            <th>Catatan</th>
+                            <th>Status Produk</th>
+                            <th>Aksi Update</th>
+                            <th>Aksi Delete</th>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($queryAB as $row) {
+                        ?>
+                            <tr>
+                                <td><?= $row->id_menu ?></td>
+                                <td><?= $row->src_gambar ?></td>
+                                <td><?= $row->jenis_produk ?></td>
+                                <td><?= $row->kategori ?></td>
+                                <td><?= $row->nama_produk ?></td>
+                                <td><?= $row->harga ?></td>
+                                <td><?= $row->rating ?></td>
+                                <td><?= $row->catatan ?></td>
+                                <td><?= $row->status_produk ?></td>
+                                <td><a href="<?= base_url('admin/edit_produk'); ?>/<?= $row->id_menu ?>">Update</a></td>
+                                <td><a href="<?= base_url('admin/fungsi_delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <!-- Close Container -->
