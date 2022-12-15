@@ -54,6 +54,9 @@ if (isset($_POST['submit'])) {
         $ubahHarga = $harga;
         $sqlTopping = "UPDATE `membeli` SET total_harga = total_harga + $ubahHarga, topping = '" . $topping . "', extratopping = '" . $extraTopping . "' WHERE `membeli`.`id_cart` = '$idCart';";
         $qryExtraTopping = mysqli_query($koneksi, $sqlTopping);
+    } else {
+        $sqlDelete = "UPDATE `membeli` SET `topping` = NULL, `extratopping` = NULL WHERE `membeli`.`id_cart` = '$idCart';";
+        mysqli_query($koneksi, $sqlDelete);
     }
 }
 

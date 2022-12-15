@@ -9,16 +9,22 @@ class crudboba extends CI_Model
         return $query->result();
     }
 
-    function insertDataBoba($data)
-    {
-        $this->db->insert('menu_costumer', $data);
-    }
-
     function getDataBobaDetail($id_menu)
     {
         $this->db->where('id_menu', $id_menu);
         $query = $this->db->get('menu_costumer');
         return $query->row();
+    }
+
+    function getDataPesanan()
+    {
+        $query = $this->db->get('dibayar');
+        return $query->result();
+    }
+
+    function insertDataBoba($data)
+    {
+        $this->db->insert('menu_costumer', $data);
     }
 
     function updateDataBoba($id, $data)

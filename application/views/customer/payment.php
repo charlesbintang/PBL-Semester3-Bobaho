@@ -129,6 +129,7 @@ if (isset($_POST['submit'])) {
         .container {
             margin-right: auto;
             margin-left: auto;
+            margin-bottom: 5px;
             width: 300px;
         }
 

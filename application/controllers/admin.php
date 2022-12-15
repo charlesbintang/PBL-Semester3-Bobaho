@@ -31,6 +31,19 @@ class admin extends CI_Controller
         $this->load->view('admin/edit', $DATA);
     }
 
+    public function delete($id)
+    {
+        $this->crudboba->deleteDataBoba($id);
+        redirect('admin');
+    }
+
+    public function pesanan()
+    {
+        $qryPesanan = $this->crudboba->getDataPesanan();
+        $data = array('qryPesanan' => $qryPesanan);
+        $this->load->view('admin/lihatPesanan', $data);
+    }
+
     public function insert()
     {
         $jenis = $this->input->post('jenis');
@@ -79,12 +92,6 @@ class admin extends CI_Controller
         );
 
         $this->crudboba->updateDataBoba($id, $ArrUpdate);
-        redirect('admin');
-    }
-
-    public function delete($id)
-    {
-        $this->crudboba->deleteDataBoba($id);
         redirect('admin');
     }
 }
