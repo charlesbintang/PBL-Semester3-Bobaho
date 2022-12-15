@@ -38,14 +38,14 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-uppercase">
         <div class="container">
-            <a class="navbar-brand" href="#">CRUD | PHP</a>
+            <a class="navbar-brand" href="<?= base_url('admin') ?>">CRUD | PHP</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Logout</a>
+                        <a class="nav-link" href="<?= base_url('auth') ?>">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="row">
             <div class="cold-md">
-                <a href="<?= base_url('user/tambah_produk/'); ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
+                <a href="<?= base_url('admin/tambah_produk/'); ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
                 <a href="tmbhtoping.php" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Ubah Status Produk</a>
             </div>
             <br> <br>
