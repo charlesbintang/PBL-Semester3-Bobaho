@@ -42,7 +42,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-md">
-                <form action="<?= base_url('admin/fungsi_edit') ?>" method="post">
+                <form action="<?= base_url('admin/update') ?>" method="post">
                     <input type="hidden" name="id" value="<?= $queryBD->id_menu ?>">
                     <div class="mb-3">
                         <label for="Harga" class="form-label">Jenis Produk</label>

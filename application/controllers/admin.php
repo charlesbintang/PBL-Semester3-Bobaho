@@ -19,19 +19,19 @@ class admin extends CI_Controller
         $this->load->view('admin/tambah', $data);
     }
 
-    public function tambah_produk()
+    public function tambah()
     {
         $this->load->view('admin/halamantambah');
     }
 
-    public function edit_produk($id_produk)
+    public function ubah($id_produk)
     {
         $queryBobaDetail = $this->crudboba->getDataBobaDetail($id_produk);
         $DATA = array('queryBD' => $queryBobaDetail);
         $this->load->view('admin/edit', $DATA);
     }
 
-    public function tambah()
+    public function insert()
     {
         $jenis = $this->input->post('jenis');
         $kategori = $this->input->post('kategori');
@@ -57,7 +57,7 @@ class admin extends CI_Controller
         redirect('admin');
     }
 
-    public function fungsi_edit()
+    public function update()
     {
         $id = $this->input->post('id');
         $jenis = $this->input->post('jenis');
@@ -82,7 +82,7 @@ class admin extends CI_Controller
         redirect('admin');
     }
 
-    public function fungsi_delete($id)
+    public function delete($id)
     {
         $this->crudboba->deleteDataBoba($id);
         redirect('admin');

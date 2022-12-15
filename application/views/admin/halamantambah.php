@@ -42,7 +42,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-md">
-                <form action="<?= base_url('admin/tambah') ?>" method="post">
+                <form action="<?= base_url('admin/insert') ?>" method="post">
                     <div class="mb-3">
                         <label for="Harga" class="form-label">Jenis Produk</label>
                         <select class="form-select w-50" name="jenis">

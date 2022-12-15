@@ -56,9 +56,9 @@
             <hr>
         </div>
         <div class="row">
-            <div class="cold-md">
-                <a href="<?= base_url('admin/tambah_produk/'); ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Daftar Produk</a>
-                <a href="tmbhtoping.php" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Ubah Status Produk</a>
+            <div class="mx-auto" style="width: 330px;">
+                <a href="<?= base_url('admin/tambah'); ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Tambah Menu</a>
+                <a href="<?= base_url('admin/pesanan') ?>" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Pesanan Masuk</a>
             </div>
             <br> <br>
             <div id="tabel">
@@ -92,8 +92,8 @@
                                 <td><?= $row->rating ?></td>
                                 <td><?= $row->catatan ?></td>
                                 <td><?= $row->status_produk ?></td>
-                                <td><a href="<?= base_url('admin/edit_produk'); ?>/<?= $row->id_menu ?>">Update</a></td>
-                                <td><a href="<?= base_url('admin/fungsi_delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
+                                <td><a href="<?= base_url('admin/ubah'); ?>/<?= $row->id_menu ?>">Update</a></td>
+                                <td><a href="<?= base_url('admin/delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
                             </tr>
                         <?php } ?>
                     </tbody>
