@@ -14,22 +14,22 @@ class crudboba extends CI_Model
         $this->db->insert('menu_costumer', $data);
     }
 
-    function getDataBobaDetail($id_produk)
+    function getDataBobaDetail($id_menu)
     {
-        $this->db->where('id_produk', $id_produk);
-        $query = $this->db->get('crud');
+        $this->db->where('id_menu', $id_menu);
+        $query = $this->db->get('menu_costumer');
         return $query->row();
     }
 
     function updateDataBoba($id, $data)
     {
-        $this->db->where('id_produk', $id);
-        $this->db->update('crud', $data);
+        $this->db->where('id_menu', $id);
+        $this->db->update('menu_costumer', $data);
     }
 
     function deleteDataBoba($id)
     {
-        $this->db->where('id_produk', $id);
-        $this->db->delete('crud');
+        $this->db->where('id_menu', $id);
+        $this->db->delete('menu_costumer');
     }
 }

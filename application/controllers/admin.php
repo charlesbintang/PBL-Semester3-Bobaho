@@ -33,8 +33,6 @@ class admin extends CI_Controller
 
     public function tambah()
     {
-        $id = $this->input->post('id');
-        $source = $this->input->post('source');
         $jenis = $this->input->post('jenis');
         $kategori = $this->input->post('kategori');
         $nama = $this->input->post('nama');
@@ -45,7 +43,7 @@ class admin extends CI_Controller
 
         $ArrInsert = array(
             'id_menu' => '',
-            'src_gambar' => $source,
+            'src_gambar' => '',
             'jenis_produk' => $jenis,
             'kategori' => $kategori,
             'nama_produk' => $nama,
@@ -56,30 +54,37 @@ class admin extends CI_Controller
         );
 
         $this->crudboba->insertDataBoba($ArrInsert);
-        redirect(base_url('user'));
+        redirect('admin');
     }
 
     public function fungsi_edit()
     {
         $id = $this->input->post('id');
+        $jenis = $this->input->post('jenis');
+        $kategori = $this->input->post('kategori');
+        $rating = $this->input->post('rating');
+        $status = $this->input->post('status');
         $nama = $this->input->post('nama');
         $harga = $this->input->post('harga');
         $catatan = $this->input->post('catatan');
 
         $ArrUpdate = array(
-            'id_produk' => $id,
             'nama_produk' => $nama,
-            'harga_produk' => $harga,
+            'harga' => $harga,
+            'jenis_produk' => $jenis,
+            'kategori' => $kategori,
+            'rating' => $rating,
+            'status_produk' => $status,
             'catatan' => $catatan
         );
 
         $this->crudboba->updateDataBoba($id, $ArrUpdate);
-        redirect(base_url('user'));
+        redirect('admin');
     }
 
     public function fungsi_delete($id)
     {
         $this->crudboba->deleteDataBoba($id);
-        redirect(base_url('user'));
+        redirect('admin');
     }
 }

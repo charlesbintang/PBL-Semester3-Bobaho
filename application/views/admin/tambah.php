@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- Own CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/style.css?v=0.0.4">
-    <title>Daftar Menu | CRUD PHP</title>
+    <title>Daftar Menu | Admin</title>
 
     <style>
         select.input-sm {
@@ -38,10 +38,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-uppercase">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url('admin') ?>">CRUD | PHP</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <a class="navbar-brand" href="<?= base_url('admin') ?>">Admin</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -96,8 +93,8 @@
                             <td><?= $row->rating ?></td>
                             <td><?= $row->catatan ?></td>
                             <td><?= $row->status_produk ?></td>
-                            <td><a href="<?= base_url('user/edit_produk'); ?>/<?= $row->id_menu ?>">Update</a></td>
-                            <td><a href="<?= base_url('user/fungsi_delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
+                            <td><a href="<?= base_url('admin/edit_produk'); ?>/<?= $row->id_menu ?>">Update</a></td>
+                            <td><a href="<?= base_url('admin/fungsi_delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -121,13 +118,6 @@
             new $.fn.dataTable.FixedHeader(table);
         });
     </script>
-
-
-
-
-
-
-
 </body>
 
 </html>

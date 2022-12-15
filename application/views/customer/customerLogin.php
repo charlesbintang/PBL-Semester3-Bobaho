@@ -1,7 +1,6 @@
 <?php
 error_reporting(0);
-session_start();
-$ingataku = "";
+session_destroy();
 $koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
 
 if (isset($_POST['login'])) {
