@@ -41,9 +41,25 @@ class menu extends CI_Controller
 
     public function verification()
     {
-        error_reporting(0);
-        $this->load->view('customer/notifQRIS');
-        $this->_sendEmail();
+        $query = $this->db->query('SELECT * FROM membeli');
+        if ($query->num_rows() > 0) {
+            error_reporting(0);
+            $this->load->view('customer/notifQRIS');
+            $this->_sendEmail();
+        } else {
+            redirect('menu');
+        }
+    }
+
+    public function cash()
+    {
+        $query = $this->db->query('SELECT * FROM membeli');
+        if ($query->num_rows() > 0) {
+            error_reporting(0);
+            $this->load->view('customer/notifCash');
+        } else {
+            redirect('menu');
+        }
     }
 
     private function _sendEmail()
@@ -72,12 +88,5 @@ class menu extends CI_Controller
             echo $this->email->print_debugger();
             die;
         }
-    }
-
-    public function cash()
-    {
-        error_reporting(0);
-        $this->load->view('customer/notifCash');
-        $this->_sendEmail();
     }
 }

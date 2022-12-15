@@ -263,7 +263,7 @@ $jumlahKategori = count($arrKategori);
               </div>
             </div>
             <br>
-            <p class="fst-italic" align="center">Rasa:<br> <?php echo $row["catatan"] ?></p>
+            <p class="fst-italic" align="center">Rasa:<br> <?php echo $row["keterangan"] ?></p>
           </div>
         <?php $counter++;
         }

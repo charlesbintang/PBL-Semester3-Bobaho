@@ -14,12 +14,19 @@ $qryIdCus = mysqli_query($koneksi, $sqlIdCus);
 $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
+//mengirim email jika user sudah ada session payment
+if (isset($_SESSION['session_payment'])) {
+    $this->_sendEmail();
+} else {
+    redirect('menu');
+}
+
 //kode pesanan
 $sqlMembeli = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]'; ";
 $result = mysqli_query($koneksi, $sqlMembeli);
 $row = mysqli_fetch_array($result);
 $kodePesanan = "A" . $idCustomer['id_customer'] . "" . $row['id_cart'] . "";
-$sqlKirim = "UPDATE `membeli` SET catatan = '" . $row['catatan'] . ", " . $kodePesanan . "' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'";
+$sqlKirim = "UPDATE `membeli` SET catatan = '" . $row['catatan'] . " | " . $kodePesanan . "' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'";
 mysqli_query($koneksi, $sqlKirim);
 
 //duplikasi isi tabel dan pindahkan ke tabel dibayar

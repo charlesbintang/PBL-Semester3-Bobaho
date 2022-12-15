@@ -15,7 +15,7 @@ $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
 if (isset($_POST['form'])) {
-    $form = implode(", ", $_POST['form']);
+    $form = implode(" | ", $_POST['form']);
     $sqlKirim = "UPDATE `membeli` SET `catatan` = '" . $form . "' WHERE `membeli`.`id_customer` = '$idCustomer[id_customer]';";
     $qryKirim = mysqli_query($koneksi, $sqlKirim);
     if ($qryKirim) {
@@ -28,7 +28,7 @@ if (isset($_POST['form'])) {
         echo '
         <script>
         alert("Gagal mengirim. Silahkan ulangi!");
-        document.location.href = "' . base_url('menu/note') . '";
+        document.location.href = "' . base_url('menu') . '";
         </script>
         ';
     }
@@ -202,50 +202,57 @@ if (isset($_POST['form'])) {
         <img src="<?= base_url('assets/aset boba/'); ?>Judul.png" width="150px" id="Bobaandtea" alt="..." onclick="document.location.href = '<?= base_url('menu/cart'); ?>'">
         <img src="<?= base_url('assets/aset boba/'); ?>logo.png" width="100px" id="ayam" alt="..." onclick="document.location.href = '<?= base_url('menu/cart'); ?>'">
     </header>
+    <?php
+    $sqlMembeli = "SELECT * FROM membeli WHERE id_customer = '$idCustomer[id_customer]'; ";
+    $result = mysqli_query($koneksi, $sqlMembeli);
+    if (mysqli_num_rows($result) > 0) {
+    ?>
 
-    <!-- catatan dan nama -->
-    <div class="Container">
-        <div class="BoxCatatan">
-            <form action="" method="POST">
-                <p>Tolong isi form dibawah ini ya!</p>
-                <label for="exampleFormControlInput1" class="form-label">Nama : </label>
-                <input type="text" name="form[]" class="form-control" id="exampleFormControlInput1" placeholder="Isi nama Anda" required>
-        </div>
-        <div class="BoxCatatan">
-            <label for="exampleFormControlTextarea1" class="form-label">Isi permintaan khusus dan posisi Anda!</label>
-            <textarea class="form-control" name="form[]" id="exampleFormControlTextarea1" rows="8" placeholder='contoh: "tidak pakai es batu ya"
+        <!-- catatan dan nama -->
+        <div class="Container">
+            <div class="BoxCatatan">
+                <form action="" method="POST">
+                    <p>Tolong isi form dibawah ini ya!</p>
+                    <label for="exampleFormControlInput1" class="form-label">Nama : </label>
+                    <input type="text" name="form[]" class="form-control" id="exampleFormControlInput1" placeholder="Isi nama Anda" required>
+            </div>
+            <div class="BoxCatatan">
+                <label for="exampleFormControlTextarea1" class="form-label">Isi permintaan khusus dan posisi Anda!</label>
+                <textarea class="form-control" name="form[]" id="exampleFormControlTextarea1" rows="8" placeholder='contoh: "tidak pakai es batu ya"
 "Posisi saya di Kenji Kopitiam, meja dekat dengan sate, baju saya warna biru"' required></textarea>
+            </div>
         </div>
-    </div>
 
 
-    <div class="bawah">
+        <div class="bawah">
 
-        <!-- tombol back -->
-        <div>
-            <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu/cart'); ?>'">
-                <span class="backButton">
-                    <ion-icon name="arrow-round-back"></ion-icon>
-                </span>
+            <!-- tombol back -->
+            <div>
+                <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu/cart'); ?>'">
+                    <span class="backButton">
+                        <ion-icon name="arrow-round-back"></ion-icon>
+                    </span>
+                    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+                </button>
+            </div>
+
+            <!-- button kirim -->
+            <div class="kirim">
+                <button class="ButtonKirim" type="submit">
+                    <span class="button">Kirim</span>
+                    <span class="button1">
+                        <ion-icon name="send"></ion-icon>
+                    </span>
+                </button>
+                </form>
                 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+            </div>
 
-            </button>
         </div>
-
-        <!-- button kirim -->
-        <div class="kirim">
-            <button class="ButtonKirim" type="submit">
-                <span class="button">Kirim</span>
-                <span class="button1">
-                    <ion-icon name="send"></ion-icon>
-                </span>
-            </button>
-            </form>
-            <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-        </div>
-
-    </div>
-
+    <?php } else {
+        redirect('menu');
+    } ?>
 </body>
 
 </html>

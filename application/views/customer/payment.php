@@ -14,6 +14,8 @@ $qryIdCus = mysqli_query($koneksi, $sqlIdCus);
 $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
+$_SESSION['payment'] = $idCustomer['id_customer'];
+
 if (isset($_POST['submit'])) {
     if (!isset($_FILES['gambar']['tmp_name'])) {
         echo '<span style="color:red"><b><u><i>Pilih file gambar</i></u></b></span>';
@@ -150,97 +152,105 @@ if (isset($_POST['submit'])) {
     </header>
 
     <?php
-
-    // looping php, dibeli
-    $totalPembayaran = 0;
     $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
     $result = mysqli_query($koneksi, $sqlMembeli);
-    while ($row = mysqli_fetch_array($result)) {
+    $check = mysqli_fetch_array($result);
+    if (mysqli_num_rows($result) > 0 && $check['catatan'] == '') {
+        //session payment, untuk mencegah user direct ke notifQRIS/notifCash tanpa melalui payment
+        session_start();
+        $_SESSION['session_payment'] = $idCustomer['id_customer'];
+        // looping php, dibeli
+        $totalPembayaran = 0;
+        $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
+        $result = mysqli_query($koneksi, $sqlMembeli);
+        while ($row = mysqli_fetch_array($result)) {
     ?>
-        <div class="container">
-            <table class="table">
-                <tr>
-                    <td rowspan="2" style="width: 35%;" align="center">
-                        <img src="<?= base_url('assets/') ?>aset boba/1x/<?php echo $row["src_gambar"]; ?>" alt="..." width="50%">
-                    </td>
-                    <td rowspan="2" class="boba">
-                        <h6><?php echo $row["nama_produk"]; ?></h6> <img src="<?= base_url('assets/') ?>aset boba/bintang.png" alt="..." class="bintang" style="margin-bottom:-1px;">&nbsp;<?php echo $row["rating"]; ?>
-                    </td>
-                    <td style="padding-top:17px;">
-                        <span class="box">Rp&nbsp;<?php echo $row["total_harga"]; ?>.000</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="8" align="left" style="padding-left: 10px; padding-bottom:10px;">
-                        <?php
-                        //konversi nilai string dari table topping dan extra topping ke array
-                        $arrTopping = explode(",", $row['topping']);
-                        $jumlahTopping = count($arrTopping);
-                        $arrExtraTopping = explode(",", $row['extratopping']);
-                        $jumlahExTop = count($arrExtraTopping);
+            <div class="container">
+                <table class="table">
+                    <tr>
+                        <td rowspan="2" style="width: 35%;" align="center">
+                            <img src="<?= base_url('assets/') ?>aset boba/1x/<?php echo $row["src_gambar"]; ?>" alt="..." width="50%">
+                        </td>
+                        <td rowspan="2" class="boba">
+                            <h6><?php echo $row["nama_produk"]; ?></h6> <img src="<?= base_url('assets/') ?>aset boba/bintang.png" alt="..." class="bintang" style="margin-bottom:-1px;">&nbsp;<?php echo $row["rating"]; ?>
+                        </td>
+                        <td style="padding-top:17px;">
+                            <span class="box">Rp&nbsp;<?php echo $row["total_harga"]; ?>.000</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="8" align="left" style="padding-left: 10px; padding-bottom:10px;">
+                            <?php
+                            //konversi nilai string dari table topping dan extra topping ke array
+                            $arrTopping = explode(",", $row['topping']);
+                            $jumlahTopping = count($arrTopping);
+                            $arrExtraTopping = explode(",", $row['extratopping']);
+                            $jumlahExTop = count($arrExtraTopping);
 
-                        //buat update harga jika tidak ada isi dari table topping dan extra topping
-                        if ($jumlahTopping == 1 && $jumlahExTop == 1) {
-                            echo "Tidak ada topping terpilih..";
-                        } else {
-                            if ($jumlahTopping > 1) {
-                                for ($z = 0; $z < $jumlahTopping; $z++) {
-                                    echo $arrTopping[$z] . "<br>";
+                            //buat update harga jika tidak ada isi dari table topping dan extra topping
+                            if ($jumlahTopping == 1 && $jumlahExTop == 1) {
+                                echo "Tidak ada topping terpilih..";
+                            } else {
+                                if ($jumlahTopping > 1) {
+                                    for ($z = 0; $z < $jumlahTopping; $z++) {
+                                        echo $arrTopping[$z] . "<br>";
+                                    }
+                                }
+                                if ($jumlahExTop > 1) {
+                                    for ($w = 0; $w < $jumlahExTop; $w++) {
+                                        echo $arrExtraTopping[$w] . "<br>";
+                                    }
                                 }
                             }
-                            if ($jumlahExTop > 1) {
-                                for ($w = 0; $w < $jumlahExTop; $w++) {
-                                    echo $arrExtraTopping[$w] . "<br>";
-                                }
-                            }
-                        }
-                        ?>
-                    </td>
-                </tr>
-            </table>
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        <?php $totalPembayaran += $row["total_harga"];
+        } ?>
+
+        <h4 style="display:flex; justify-content:center;">Total Belanja: <?php echo "Rp " . number_format($totalPembayaran, 3); ?></h4>
+
+        <h3 style="display:flex; justify-content:center;">Silahkan Bayar Melalui QRIS</h3>
+
+        <div id="barcode">
+            <img height="400px" src="<?= base_url('assets/'); ?>aset boba/barcode.jpg" alt="">
         </div>
-    <?php $totalPembayaran += $row["total_harga"];
+
+        <h3 style="display:flex; justify-content:center;">Sertakan bukti Screenshot-nya ya!</h3>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div style="display:flex; justify-content:center;">
+                <input name="gambar" type="file" required>
+            </div>
+            <div style="display:flex; justify-content:center; padding-top:10px;">
+                <input type="submit" name="submit" style="padding: 5px 15px;">
+            </div>
+        </form>
+        <h3 style="display:flex; justify-content:center;">Atau Bayar Melalui Kasir</h3>
+
+        <div class="bayartulisan">
+            <button id="bayar" type="button" onclick="alert('Pesanan diterima'); document.location.href = '<?= base_url('menu/cash') ?>'">Bayar Cash</button>
+        </div>
+
+
+
+        <!-- tombol back -->
+        <div>
+            <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu/note') ?>'">
+                <span class="backButton">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                </span>
+                <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+            </button>
+        </div>
+    <?php } else {
+        redirect('menu');
     } ?>
-
-    <h4 style="display:flex; justify-content:center;">Total Belanja: <?php echo "Rp " . number_format($totalPembayaran, 3); ?></h4>
-
-    <h3 style="display:flex; justify-content:center;">Silahkan Bayar Melalui QRIS</h3>
-
-    <div id="barcode">
-        <img height="400px" src="<?= base_url('assets/'); ?>aset boba/barcode.jpg" alt="">
-    </div>
-
-    <h3 style="display:flex; justify-content:center;">Sertakan bukti Screenshot-nya ya!</h3>
-    <form action="" method="POST" enctype="multipart/form-data">
-        <div style="display:flex; justify-content:center;">
-            <input name="gambar" type="file" required>
-        </div>
-        <div style="display:flex; justify-content:center; padding-top:10px;">
-            <input type="submit" name="submit" style="padding: 5px 15px;">
-        </div>
-    </form>
-    <h3 style="display:flex; justify-content:center;">Atau Bayar Melalui Kasir</h3>
-
-    <div class="bayartulisan">
-        <button id="bayar" type="button" onclick="alert('Pesanan diterima'); document.location.href = '<?= base_url('menu/cash') ?>'">Bayar Cash</button>
-    </div>
-
-
-
-    <!-- tombol back -->
-    <div>
-        <button class="tombolBack" type="button" onclick="document.location.href = '<?= base_url('menu/note') ?>'">
-            <span class="backButton">
-                <ion-icon name="arrow-round-back"></ion-icon>
-            </span>
-            <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-
-        </button>
-    </div>
-
 </body>
 
 </html>
