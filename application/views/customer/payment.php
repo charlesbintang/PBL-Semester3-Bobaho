@@ -14,8 +14,6 @@ $qryIdCus = mysqli_query($koneksi, $sqlIdCus);
 $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
-$_SESSION['payment'] = $idCustomer['id_customer'];
-
 if (isset($_POST['submit'])) {
     if (!isset($_FILES['gambar']['tmp_name'])) {
         echo '<span style="color:red"><b><u><i>Pilih file gambar</i></u></b></span>';
@@ -155,7 +153,7 @@ if (isset($_POST['submit'])) {
     $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
     $result = mysqli_query($koneksi, $sqlMembeli);
     $check = mysqli_fetch_array($result);
-    if (mysqli_num_rows($result) > 0 && $check['catatan'] == '') {
+    if (mysqli_num_rows($result) > 0 && $check['catatan'] != ' ') {
         //session payment, untuk mencegah user direct ke notifQRIS/notifCash tanpa melalui payment
         session_start();
         $_SESSION['session_payment'] = $idCustomer['id_customer'];

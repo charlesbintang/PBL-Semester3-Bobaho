@@ -25,12 +25,12 @@ if (isset($_POST['form'])) {
         </script>
         ';
     } else {
-        echo '
-        <script>
-        alert("Gagal mengirim. Silahkan ulangi!");
-        document.location.href = "' . base_url('menu') . '";
-        </script>
-        ';
+        echo 'gagal';
+        // <script>
+        // alert("Gagal mengirim. Silahkan ulangi!");
+        // document.location.href = "' . base_url('menu') . '";
+        // </script>
+        // ';
     }
 }
 

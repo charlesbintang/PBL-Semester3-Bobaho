@@ -61,17 +61,17 @@
                 <table id="tabel-data" class="display nowrap table-striped table-bordered table" style="width:100%; color:white;">
                     <thead>
                         <tr>
+                            <th>Kode Pesanan</th>
+                            <th>Nama Customer</th>
+                            <th>Posisi Customer</th>
+                            <th>Catatan Customer</th>
                             <th>ID Menu</th>
-                            <th>Source Gambar</th>
-                            <th>Jenis Produk</th>
-                            <th>Kategori</th>
-                            <th>Nama Produk</th>
                             <th>Harga</th>
-                            <th>Rating</th>
-                            <th>Catatan</th>
-                            <th>Status Produk</th>
-                            <th>Aksi Update</th>
-                            <th>Aksi Delete</th>
+                            <th>Jumlah Pesanan</th>
+                            <th>Topping</th>
+                            <th>Ekstra Topping</th>
+                            <th>Total Harga</th>
+                            <th>Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
