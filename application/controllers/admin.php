@@ -37,6 +37,11 @@ class admin extends CI_Controller
         redirect('admin');
     }
 
+    public function lihatGambar()
+    {
+        $this->load->view('admin/imageView');
+    }
+
     public function pesanan()
     {
         $qryPesanan = $this->crudboba->getDataPesanan();

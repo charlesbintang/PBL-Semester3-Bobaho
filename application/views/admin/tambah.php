@@ -92,7 +92,7 @@
                                 <td><?= $row->rating ?></td>
                                 <td><?= $row->keterangan ?></td>
                                 <td><?= $row->status_produk ?></td>
-                                <td><a href="<?= base_url('admin/ubah'); ?>/<?= $row->id_menu ?>">Update</a></td>
+                                <td><a href="<?= base_url('admin/ubah') ?>/<?= $row->id_menu ?>">Update</a></td>
                                 <td><a href="<?= base_url('admin/delete') ?>/<?= $row->id_menu ?>">Delete</a></td>
                             </tr>
                         <?php } ?>

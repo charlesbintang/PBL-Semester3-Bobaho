@@ -84,15 +84,19 @@
                                 <td><?= $catatan[0] ?></td>
                                 <td><?= $catatan[1] ?></td>
                                 <td><?= $row->id_menu ?></td>
-                                <td><?= $row->harga ?></td>
+                                <td><?= $row->harga . ".000" ?></td>
                                 <td><?= $row->jumlah_pesanan ?></td>
                                 <td><?= $row->topping ?></td>
                                 <td><?= $row->extratopping ?></td>
-                                <td><?= $row->total_harga ?></td>
+                                <td><?= $row->total_harga . ".000" ?></td>
                                 <td><?php $bayar = $row->gambar;
                                     if ($bayar == NULL) {
                                         echo 'CASH';
-                                    } ?></td>
+                                    } else { ?>
+                                        <a href="<?= base_url('admin/lihatGambar') ?>?id_cart=<?= $row->id_cart ?>">Lihat</a>
+                                        <!-- <img src="<?= base_url('admin/gambar') ?>/<?= $row->id_cart ?>" width="100" alt="..."> -->
+                                    <?php } ?>
+                                </td>
 
                             </tr>
                         <?php } ?>

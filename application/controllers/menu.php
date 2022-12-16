@@ -39,13 +39,18 @@ class menu extends CI_Controller
         $this->load->view('customer/payment');
     }
 
+    public function email()
+    {
+        error_reporting(0);
+        $this->load->view('customer/email');
+    }
+
     public function verification()
     {
         $query = $this->db->query('SELECT * FROM membeli');
         if ($query->num_rows() > 0) {
             error_reporting(0);
             $this->load->view('customer/notifQRIS');
-            $this->_sendEmail();
         } else {
             redirect('menu');
         }
@@ -62,31 +67,41 @@ class menu extends CI_Controller
         }
     }
 
-    private function _sendEmail()
+    public function sendEmail()
     {
-        $config = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'chadianjos3@gmail.com',
-            'smtp_pass' => 'osugmpspvxfrpxtz',
-            'smtp_port' => 465,
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n"
-        ];
+        if (isset($_SESSION['session_payment'])) {
 
-        $this->email->initialize($config);
+            $config = [
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_user' => 'chadianjos3@gmail.com',
+                'smtp_pass' => 'osugmpspvxfrpxtz',
+                'smtp_port' => 465,
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'newline' => "\r\n"
+            ];
+            $this->load->library('email');
 
-        $this->email->from('chadianjos3@gmail.com', 'PBL-Semester3',);
-        $this->email->to('josephleonardo199@gmail.com');
-        $this->email->subject('Customer');
-        $this->email->message('Ada yang baru saja order nih, tolong dicek ya');
+            $this->email->initialize($config);
 
-        if ($this->email->send()) {
-            return true;
+            $this->email->from('chadianjos3@gmail.com', 'PBL-Semester3',);
+            $this->email->to('josephleonardo199@gmail.com');
+            $this->email->subject('Customer');
+            $this->email->message('Ada yang baru saja order nih, tolong dicek ya');
+
+            if ($this->email->send()) {
+                if ($_SESSION['QRIS'] == true) {
+                    redirect('menu/verification');
+                } elseif ($_SESSION['CASH'] == true) {
+                    redirect('menu/cash');
+                }
+            } else {
+                echo $this->email->print_debugger();
+                die;
+            }
         } else {
-            echo $this->email->print_debugger();
-            die;
+            redirect('menu');
         }
     }
 }

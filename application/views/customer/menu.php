@@ -1,5 +1,8 @@
 <?php
 session_start();
+unset($_SESSION['session_payment']);
+unset($_SESSION['QRIS']);
+unset($_SESSION['CASH']);
 //hapus error reporting ketika debugging. Jangan hapus jika tidak debugging
 error_reporting(0);
 date_default_timezone_set("Asia/Jakarta");

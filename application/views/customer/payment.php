@@ -23,10 +23,11 @@ if (isset($_POST['submit'])) {
         if ($file_size < 2048000 and ($file_type == 'image/jpeg' or $file_type == 'image/png')) {
             $image   = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
             mysqli_query($koneksi, "UPDATE `membeli` SET gambar = '$image', tipe_gambar = '$file_type' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'");
+            $_SESSION['QRIS'] = true;
             echo '
             <script>
             alert("Pesanan diterima");
-            document.location.href = "' . base_url('menu/verification') . '";
+            document.location.href = "' . base_url('menu/email') . '";
             </script>
             ';
             exit;
@@ -231,7 +232,7 @@ if (isset($_POST['submit'])) {
         <h3 style="display:flex; justify-content:center;">Atau Bayar Melalui Kasir</h3>
 
         <div class="bayartulisan">
-            <button id="bayar" type="button" onclick="alert('Pesanan diterima'); document.location.href = '<?= base_url('menu/cash') ?>'">Bayar Cash</button>
+            <button id="bayar" type="button" onclick="alert('Pesanan diterima'); document.location.href = '<?= base_url('menu/email') ?>'">Bayar Cash</button>
         </div>
 
 
