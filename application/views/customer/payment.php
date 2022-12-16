@@ -21,16 +21,9 @@ if (isset($_POST['submit'])) {
         $file_size = $_FILES['gambar']['size'];
         $file_type = $_FILES['gambar']['type'];
         if ($file_size < 2048000 and ($file_type == 'image/jpeg' or $file_type == 'image/png')) {
-            $image   = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
-            mysqli_query($koneksi, "UPDATE `membeli` SET gambar = '$image', tipe_gambar = '$file_type' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'");
+            $image = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
+            $upload = mysqli_query($koneksi, "UPDATE `membeli` SET gambar = '$image', tipe_gambar = '$file_type' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'");
             $_SESSION['QRIS'] = true;
-            echo '
-            <script>
-            alert("Pesanan diterima");
-            document.location.href = "' . base_url('menu/email') . '";
-            </script>
-            ';
-            exit;
         } else {
             echo '<span style="color:red"><b><u><i>Ukuruan File / Tipe File Tidak Sesuai</i></u></b></span>';
         }
@@ -47,6 +40,10 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment | Bobaho</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/') ?>Topping.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- JQuery-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <style>
         body {
@@ -131,13 +128,26 @@ if (isset($_POST['submit'])) {
             margin-right: auto;
             margin-left: auto;
             margin-bottom: 5px;
-            width: 300px;
+            width: 350px;
         }
 
         .totalBelanja {
             margin-right: auto;
             margin-left: auto;
             width: 170px;
+        }
+
+        .table {
+            color: #fff;
+            background-color: #28533F;
+            border-color: transparent;
+            border-radius: 15px;
+        }
+
+        @media all and (min-width: 552px) {
+            .container {
+                width: 516px;
+            }
         }
     </style>
 
@@ -211,6 +221,35 @@ if (isset($_POST['submit'])) {
             </div>
         <?php $totalPembayaran += $row["total_harga"];
         } ?>
+        <?php if ($upload) { ?>
+            <!-- Button trigger modal -->
+            <button type="button" id="btnModel" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: none;">
+                Alert
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Bobaho</h1>
+                            <button type="button" class="btn-close" onclick="document.location.href = '<?= base_url('menu/email') ?>'" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Pesanan diterima! Mohon menunggu sebentar hingga diarahkan ke halaman berikutnya.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="document.location.href = '<?= base_url('menu/email') ?>'" data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    document.querySelector('#btnModel').click();
+                });
+            </script>
+        <?php } ?>
 
         <h4 style="display:flex; justify-content:center;">Total Belanja: <?php echo "Rp " . number_format($totalPembayaran, 3); ?></h4>
 
@@ -220,7 +259,7 @@ if (isset($_POST['submit'])) {
             <img height="400px" src="<?= base_url('assets/'); ?>aset boba/barcode.jpg" alt="">
         </div>
 
-        <h3 style="display:flex; justify-content:center;">Sertakan bukti Screenshot-nya ya!</h3>
+        <h3 style="display:flex; justify-content:center; width:auto;">Sertakan bukti Screenshot-nya!</h3>
         <form action="" method="POST" enctype="multipart/form-data">
             <div style="display:flex; justify-content:center;">
                 <input name="gambar" type="file" accept=".jpg" required>
@@ -232,9 +271,36 @@ if (isset($_POST['submit'])) {
         <h3 style="display:flex; justify-content:center;">Atau Bayar Melalui Kasir</h3>
 
         <div class="bayartulisan">
-            <button id="bayar" type="button" onclick="alert('Pesanan diterima'); document.location.href = '<?= base_url('menu/email') ?>'">Bayar Cash</button>
+            <button id="bayar" type="button">Bayar Cash</button>
         </div>
 
+        <!-- Button trigger model -->
+        <button type="button" id="btnModelCash" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropCash" style="display: none;">
+            Alert
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdropCash" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Bobaho</h1>
+                        <button type="button" class="btn-close" onclick="document.location.href = '<?= base_url('menu/email') ?>'" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Pesanan diterima! Mohon menunggu sebentar hingga diarahkan ke halaman berikutnya.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="document.location.href = '<?= base_url('menu/email') ?>'" data-bs-dismiss="modal">Oke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#bayar').click(function() {
+                document.querySelector('#btnModelCash').click();
+            });
+        </script>
 
 
         <!-- tombol back -->
@@ -247,6 +313,7 @@ if (isset($_POST['submit'])) {
 
             </button>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <?php } else {
         redirect('menu');
     } ?>
