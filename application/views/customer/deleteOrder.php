@@ -12,7 +12,6 @@ if ($_GET['del']) {
     if (hapus($hapusIdCart) > 0) {
         echo
         "<script>
-            alert('Pesanan berhasil dihapus');
             document.location.href = '" . base_url('menu/cart') . "'
             </script>";
     } else {
@@ -32,6 +31,7 @@ if ($_GET['delTop']) {
         $sqlIdCus = "SELECT id_customer FROM customer WHERE nama_customer = '$sesUnCus';";
         $qryIdCus = mysqli_query($koneksi, $sqlIdCus);
         $idCustomer = mysqli_fetch_array($qryIdCus);
+
         $sqlDelete = "UPDATE `membeli` SET `topping` = NULL, `extratopping` = NULL WHERE `membeli`.`id_cart` = '$hapusTopping';";
         mysqli_query($koneksi, $sqlDelete);
 
@@ -40,7 +40,7 @@ if ($_GET['delTop']) {
 
         return mysqli_affected_rows($koneksi);
     }
-    if (hapus($hapusIdCart) > 0) {
+    if (hapus($hapusTopping) > 0) {
         echo
         "<script>
             document.location.href = '" . base_url('menu/cart') . "'
@@ -48,6 +48,7 @@ if ($_GET['delTop']) {
     } else {
         echo
         "<script>
+            alert('Topping gagal dihapus');
             document.location.href = '" . base_url('menu/cart') . "'
             </script>";
     }

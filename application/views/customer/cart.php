@@ -71,12 +71,30 @@ if (isset($_POST['submit'])) {
     <title>Cart | Bobaho</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- JQuery-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <!-- Own CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/') ?>Topping.css">
+    <style>
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            margin: var(--bs-modal-margin);
+            pointer-events: none;
+            padding-top: 11rem;
+        }
 
+        @media all and (min-width: 576px) {
+            .modal-dialog {
+                max-width: var(--bs-modal-width);
+                margin-right: auto;
+                margin-left: auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -87,7 +105,7 @@ if (isset($_POST['submit'])) {
                 <a class="navbar-brand" href="<?= base_url('menu'); ?>">Boba and Tea</a>
                 <img src="<?= base_url('assets/') ?>aset boba/logo bobaho.png" alt="tidak tersedia" width="98px" style="padding-top:2px;" onclick="document.location.href ='<?= base_url('menu'); ?>'">
 
-                <button type="button" class="btn btn-secondary" style="width: 80px; border-top-width: 0; padding-top: 0; padding-bottom: 0;" onclick="document.location.href= '<?= base_url('menu'); ?>'">
+                <button type="button" class="btn btn-secondary" style="width: 80px; border-top-width: 0; padding-top: 0; padding-bottom: 0; background: transparent; border: transparent;" onclick="document.location.href= '<?= base_url('menu'); ?>'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80%" viewBox="0 0 24 24">
                         <path fill="#fff" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"></path>
                     </svg>
@@ -122,7 +140,7 @@ if (isset($_POST['submit'])) {
                             <span class="box">Rp&nbsp;<?php echo $row["total_harga"]; ?>.000</span>
                         </td>
                         <td><br>
-                            <button class="btn btn-danger" onclick="confirm('Apakah Anda yakin?') ? document.location.href = '<?= base_url('menu/delete') ?>?del=<?= $row['id_cart'] ?>' : ''">X</button>
+                            <button class="btn btn-danger" id="btnHapus<?= $row['id_cart'] ?>">X</button>
                         </td>
                     </tr>
                     <tr>
@@ -264,6 +282,35 @@ if (isset($_POST['submit'])) {
                         </td>
                     </tr>
                 </table>
+
+                <!-- Button trigger modal -->
+                <button type="button" id="btnModel<?= $row['id_cart'] ?>" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?= $row['id_cart'] ?>" style="display: none;">
+                    Alert
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop<?= $row['id_cart'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Bobaho</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Anda yakin ingin menghapus pesanan ini?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="document.location.href = '<?= base_url('menu/delete') ?>?del=<?= $row['id_cart'] ?>'">Iya</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $('#btnHapus<?= $row['id_cart'] ?>').click(function() {
+                        document.querySelector('#btnModel<?= $row['id_cart'] ?>').click();
+                    });
+                </script>
             <?php } ?>
             <!-- Close Boba -->
     </main>

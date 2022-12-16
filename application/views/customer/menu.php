@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
   <title>Menu | Bobaho </title>
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  <!-- script -->
+  <!-- JQuery-->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -352,7 +352,7 @@ if (isset($_POST['submit'])) {
     <?php if ($updateToHar) { ?>
       <!-- Button trigger modal -->
       <button type="button" id="btnModel" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: none;">
-        Cart Alert
+        Alert
       </button>
 
       <!-- Modal -->
