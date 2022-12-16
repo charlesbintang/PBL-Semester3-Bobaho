@@ -25,6 +25,47 @@ while ($kategori = mysqli_fetch_array($qryKategori)) {
 }
 $jumlahKategori = count($arrKategori);
 
+//form masukkan keranjang
+if (isset($_POST['submit'])) {
+  $id_customer = $_POST["id_customer"];
+  $id_menu = $_POST["id_menu"];
+  $jumlah_pesanan = $_POST["jumlah_pesanan"];
+  $harga = $_POST["harga"];
+  $total_harga = $_POST["total_harga"];
+  $catatan = $_POST["catatan"];
+
+  $query = "INSERT INTO `membeli` (`id_customer`, `id_menu`, `jumlah_pesanan`, `harga`, `total_harga`, `catatan`) VALUES ('$id_customer', '$id_menu', '$jumlah_pesanan', '$harga', '$total_harga', '$catatan');";
+
+  $saved = mysqli_query($koneksi, $query);
+
+  if ($saved == false) {
+    echo '
+  <script> alert("Pesanan gagal ditambahkan ke keranjang. Silahkan ulangi");
+  document.location.href = "' . base_url('menu') . '";
+  </script>
+  ';
+  } else {
+    //update total harga pesanan
+    $updateTotalHarga = "UPDATE `membeli` SET `total_harga` = `harga` * `jumlah_pesanan` WHERE id_customer = '$idCustomer[id_customer]'; ";
+    $updateToHar = mysqli_query($koneksi, $updateTotalHarga);
+
+    if ($updateToHar) {
+      echo '
+    <script> 
+    console.log("Pesanan berhasil");
+    </script>
+    ';
+    } else {
+      echo '
+    <script> 
+    alert("Harga gagal diperbarui. Silahkan ulangi pemesanan");
+    document.location.href = "' . base_url('menu') . '";
+    </script>
+    ';
+    }
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,11 +77,30 @@ $jumlahKategori = count($arrKategori);
   <title>Menu | Bobaho </title>
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <!-- script -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
   <!-- Own CSS -->
   <link rel="stylesheet" href="<?= base_url('assets/css/'); ?>menuUtama.css">
+  <style>
+    .modal-dialog {
+      position: relative;
+      width: auto;
+      margin: var(--bs-modal-margin);
+      pointer-events: none;
+      padding-top: 11rem;
+    }
+
+    @media all and (min-width: 576px) {
+      .modal-dialog {
+        max-width: var(--bs-modal-width);
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -69,7 +129,14 @@ $jumlahKategori = count($arrKategori);
   <!-- Close Navbar -->
 
   <main>
-    <h2 align="center" height="40%" class="textt">Menu</h2>
+    <?php
+    if (!empty($_GET['kat'])) { ?>
+      <!-- $search = "AND nama_produk LIKE '%" . $_GET['search'] . "%' AND kategori LIKE '%" . $_GET['kat'] . "%' ";
+      $sql = "SELECT * FROM menu_costumer WHERE status_produk = 1 $search AND jenis_produk = 'minuman'"; -->
+      <h2 align="center" height="40%" class="textt"><?= " $_GET[kat] " ?></h2>
+    <?php } else { ?>
+      <h2 align="center" height="40%" class="textt">Menu</h2>
+    <?php } ?>
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <?php
@@ -98,18 +165,17 @@ $jumlahKategori = count($arrKategori);
                 <span id="valueDisplay<?php echo $row['id_menu']; ?>" class="box">1</span>
                 <button id='increment<?php echo $row['id_menu']; ?>' class="btn btn-light" aria-hidden="true" onclick="displayIncrement<?php echo $row['id_menu']; ?>()">+</button>
 
-                <form action="<?= base_url('menu/add') ?>" method="post">
+                <!-- form masukkan keranjang -->
+                <form action="" method="post">
                   <input type="hidden" name="id_customer" value="<?php echo $idCustomer['id_customer'] ?>">
                   <input type="hidden" name="id_menu" value="<?php echo $row['id_menu'] ?>">
                   <input name="jumlah_pesanan" class="inputt" id="input<?php echo $row['id_menu']; ?>" type="hidden" value="1" aria-valuemin<?php echo $row['id_menu']; ?>="1" autocomplete="off" aria-valuemax<?php echo $row['id_menu']; ?>="100" aria-valuenow<?php echo $row['id_menu']; ?>="1" tabIndex="0">
                   <input type="hidden" name="harga" value="<?php echo $row['harga'] ?>">
                   <input type="hidden" name="total_harga" value="0">
                   <input type="hidden" name="catatan" value=" ">
-                  <!-- <input type="hidden" name="tanggal" value="<?php //echo date('d-m-Y'); 
-                                                                  ?>"> -->
-                  <button type="submit" name="submit" value="<?php //echo date('H:i:s'); 
-                                                              ?>" class="btn btn-warning" style="margin-top: 10px; display: flex; justify-content: center;">Masukkan ke Keranjang</button>
+                  <button type="submit" name="submit" class="btn btn-warning" onclick="" style="margin-top: 10px; display: flex; justify-content: center;">Masukkan ke Keranjang</button>
                 </form>
+
                 <script>
                   let count<?php echo $row['id_menu']; ?> = 1;
                   const valueDisplay<?php echo $row['id_menu']; ?> = document.getElementById("valueDisplay<?php echo $row['id_menu']; ?>");
@@ -282,6 +348,39 @@ $jumlahKategori = count($arrKategori);
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+
+    <?php if ($updateToHar) { ?>
+      <!-- Button trigger modal -->
+      <button type="button" id="btnModel" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: none;">
+        Cart Alert
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Bobaho</h1>
+              <button type="button" class="btn-close" onclick="document.location.href = '<?= base_url('menu') ?>'" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Pesanan berhasil dimasukkan ke keranjang!
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" onclick="document.location.href = '<?= base_url('menu') ?>'" data-bs-dismiss="modal">Tutup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript">
+        $(document).ready(function() {
+          document.querySelector('#btnModel').click();
+        });
+      </script>
+    <?php } ?>
+
+
+
   </main>
 
   <footer>
@@ -298,6 +397,15 @@ $jumlahKategori = count($arrKategori);
           <svg xmlns="http://www.w3.org/2000/svg" width="10rem" height="2rem" viewBox="0 0 24 24">
             <path fill="#000000" d="M10 0V4H8L12 8L16 4H14V0M1 2V4H3L6.6 11.6L5.2 14C5.1 14.3 5 14.6 5 15C5 16.1 5.9 17 7 17H19V15H7.4C7.3 15 7.2 14.9 7.2 14.8V14.7L8.1 13H15.5C16.2 13 16.9 12.6 17.2 12L21.1 5L19.4 4L15.5 11H8.5L4.3 2M7 18C5.9 18 5 18.9 5 20S5.9 22 7 22 9 21.1 9 20 8.1 18 7 18M17 18C15.9 18 15 18.9 15 20S15.9 22 17 22 19 21.1 19 20 18.1 18 17 18Z" />
           </svg>
+          <?php
+          $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
+          $result = mysqli_query($koneksi, $sqlMembeli);
+          if (mysqli_num_rows($result) > 0) { ?>
+            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger" style="margin-left:30px;">
+              <?= mysqli_num_rows($result) ?>
+              <span class="visually-hidden">total cart</span>
+            </span>
+          <?php } ?>
         </button>
       </div>
     </nav>
