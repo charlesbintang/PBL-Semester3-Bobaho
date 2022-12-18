@@ -7,6 +7,9 @@ class admin extends CI_Controller
     {
         parent::__construct();
         $this->load->model('crudboba');
+        //load Helper for Form
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
     }
 
     public function index()
@@ -51,28 +54,48 @@ class admin extends CI_Controller
 
     public function insert()
     {
-        $jenis = $this->input->post('jenis');
-        $kategori = $this->input->post('kategori');
-        $nama = $this->input->post('nama');
-        $harga = $this->input->post('harga');
-        $rating = $this->input->post('rating');
-        $catatan = $this->input->post('catatan');
-        $status = $this->input->post('status');
+        $config['upload_path'] = './assets/aset boba/1x/';
+        $config['allowed_types'] = 'jpg|png';
+        $config['max_size'] = 1000;
+        // $config['max_width'] = 500;
+        // $config['max_height'] = 500;
 
-        $ArrInsert = array(
-            'id_menu' => '',
-            'src_gambar' => '',
-            'jenis_produk' => $jenis,
-            'kategori' => $kategori,
-            'nama_produk' => $nama,
-            'harga' => $harga,
-            'rating' => $rating,
-            'catatan' => $catatan,
-            'status_produk' => $status
-        );
+        $this->load->library('upload', $config);
 
-        $this->crudboba->insertDataBoba($ArrInsert);
-        redirect('admin');
+        if (!$this->upload->do_upload('gambar')) {
+            $error = array('error' => $this->upload->display_errors('<p style="color:red;">', '</p>'));
+
+            $this->load->view('admin/halamantambah', $error);
+        } //elseif (condition) {
+        //     # code... }
+        else {
+            $data = array('upload_data' => $this->upload->data());
+
+
+            $src = $this->upload->data('file_name');
+            $jenis = $this->input->post('jenis');
+            $kategori = $this->input->post('kategori');
+            $nama = $this->input->post('nama');
+            $harga = $this->input->post('harga');
+            $rating = $this->input->post('rating');
+            $deskripsi = $this->input->post('deskripsi');
+            $status = $this->input->post('status');
+
+            $ArrInsert = array(
+                'id_menu' => '',
+                'src_gambar' => $src,
+                'jenis_produk' => $jenis,
+                'kategori' => $kategori,
+                'nama_produk' => $nama,
+                'harga' => $harga,
+                'rating' => $rating,
+                'deskripsi' => $deskripsi,
+                'status_produk' => $status
+            );
+
+            $this->crudboba->insertDataBoba($ArrInsert);
+            $this->load->view('admin/halamantambah', $data);
+        }
     }
 
     public function update()
