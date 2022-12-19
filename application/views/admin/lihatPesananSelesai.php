@@ -51,14 +51,14 @@
     <div class="container">
         <div class="row my-3">
             <div class="col-md">
-                <h2 class="text-uppercase text-center fw-bold">Daftar Pesanan</h2>
+                <h2 class="text-uppercase text-center fw-bold">Pesanan Selesai</h2>
             </div>
             <hr>
         </div>
         <div class="row">
-            <div class="mx-auto" style="width: 358px;">
+            <div class="mx-auto" style="width: 308px;">
                 <a href="<?= base_url('admin') ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Daftar Menu</a>
-                <a href="<?= base_url('admin/selesai') ?>" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Pesanan Selesai</a>
+                <a href="<?= base_url('admin/pesanan') ?>" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Pesanan</a>
             </div>
             <br> <br>
             <div id="tabel">
@@ -77,8 +77,6 @@
                             <th>Pembayaran</th>
                             <th>Tanggal</th>
                             <th>Waktu</th>
-                            <th>Aksi Selesai Dibuat</th>
-                            <th>Aksi Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,8 +104,6 @@
                                 </td>
                                 <td><?= $row->tanggal ?></td>
                                 <td><?= $row->waktu ?></td>
-                                <td><a href="<?= base_url('admin/dibuat') ?>/<?= $row->id_cart ?>/<?= $row->id_customer ?>">Pesanan Telah Dibuat</a></td>
-                                <td><a href="<?= base_url('admin/deletePesanan') ?>/<?= $row->id_cart ?>">Delete</a></td>
 
                             </tr>
                         <?php } ?>

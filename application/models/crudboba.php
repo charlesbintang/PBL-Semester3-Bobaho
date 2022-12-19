@@ -22,6 +22,12 @@ class crudboba extends CI_Model
         return $query->result();
     }
 
+    function getDataPesananSelesai()
+    {
+        $query = $this->db->get('dibuat');
+        return $query->result();
+    }
+
     function getGambarPesanan($id_cart)
     {
         $query = $this->db->get_where('dibayar', ['id_cart' => $id_cart]);

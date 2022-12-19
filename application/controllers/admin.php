@@ -58,6 +58,13 @@ class admin extends CI_Controller
         $this->load->view('admin/lihatPesanan', $data);
     }
 
+    public function selesai()
+    {
+        $qryPesanan = $this->crudboba->getDataPesananSelesai();
+        $data = array('qryPesanan' => $qryPesanan);
+        $this->load->view('admin/lihatPesananSelesai', $data);
+    }
+
     public function dibuat($id_cart, $id_customer)
     {
         $this->crudboba->insertToDibuat($id_cart, $id_customer);
