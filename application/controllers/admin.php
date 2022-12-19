@@ -77,8 +77,8 @@ class admin extends CI_Controller
         $config['upload_path'] = './assets/aset boba/1x/';
         $config['allowed_types'] = 'jpg|png';
         $config['max_size'] = 1000;
-        // $config['max_width'] = 500;
-        // $config['max_height'] = 500;
+        $config['max_width'] = 500;
+        $config['max_height'] = 500;
 
         $this->load->library('upload', $config);
 
@@ -86,9 +86,7 @@ class admin extends CI_Controller
             $error = array('error' => $this->upload->display_errors('<p style="color:red;">', '</p>'));
 
             $this->load->view('admin/halamantambah', $error);
-        } //elseif (condition) {
-        //     # code... }
-        else {
+        } else {
             $data = array('upload_data' => $this->upload->data());
 
 
@@ -120,26 +118,55 @@ class admin extends CI_Controller
 
     public function update()
     {
-        $id = $this->input->post('id');
-        $jenis = $this->input->post('jenis');
-        $kategori = $this->input->post('kategori');
-        $rating = $this->input->post('rating');
-        $status = $this->input->post('status');
-        $nama = $this->input->post('nama');
-        $harga = $this->input->post('harga');
-        $catatan = $this->input->post('catatan');
+        $config['upload_path'] = './assets/aset boba/1x/';
+        $config['allowed_types'] = 'jpg|png';
+        $config['max_size'] = 1000;
+        $config['max_width'] = 500;
+        $config['max_height'] = 500;
 
-        $ArrUpdate = array(
-            'nama_produk' => $nama,
-            'harga' => $harga,
-            'jenis_produk' => $jenis,
-            'kategori' => $kategori,
-            'rating' => $rating,
-            'status_produk' => $status,
-            'catatan' => $catatan
-        );
+        $this->load->library('upload', $config);
 
-        $this->crudboba->updateDataBoba($id, $ArrUpdate);
-        redirect('admin');
+        if (!$this->upload->do_upload('gambar')) {
+            // $error = array('error' => $this->upload->display_errors('<p style="color:red;">', '</p>'));
+            $id = $this->input->post('id');
+
+            $queryBobaDetail = $this->crudboba->getDataBobaDetail($id);
+            $DATA = array(
+                'queryBD' => $queryBobaDetail,
+                'error' => $this->upload->display_errors('<p style="color:red;">', '</p>')
+            );
+            $this->load->view('admin/edit', $DATA);
+        } else {
+            $id = $this->input->post('id');
+
+            $queryBobaDetail = $this->crudboba->getDataBobaDetail($id);
+            $data = array(
+                'upload_data' => $this->upload->data(),
+                'queryBD' => $queryBobaDetail
+            );
+
+            $src = $this->upload->data('file_name');
+            $jenis = $this->input->post('jenis');
+            $kategori = $this->input->post('kategori');
+            $nama = $this->input->post('nama');
+            $harga = $this->input->post('harga');
+            $rating = $this->input->post('rating');
+            $deskripsi = $this->input->post('deskripsi');
+            $status = $this->input->post('status');
+
+            $ArrUpdate = array(
+                'src_gambar' => $src,
+                'jenis_produk' => $jenis,
+                'kategori' => $kategori,
+                'nama_produk' => $nama,
+                'harga' => $harga,
+                'rating' => $rating,
+                'deskripsi' => $deskripsi,
+                'status_produk' => $status
+            );
+
+            $this->crudboba->updateDataBoba($id, $ArrUpdate);
+            $this->load->view('admin/edit', $data);
+        }
     }
 }

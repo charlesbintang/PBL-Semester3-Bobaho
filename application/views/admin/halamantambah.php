@@ -92,7 +92,7 @@
                     </div>
                     <hr>
                     <a href="<?= base_url('admin') ?>" class="btn btn-secondary">Kembali</a>
-                    <button type="submit" name="submit" value="upload" class="btn btn-primary m-2" />Simpan</button>
+                    <button type="submit" name="submit" value="upload" class="btn btn-primary m-2">Simpan</button>
                 </form>
             </div>
         </div>
