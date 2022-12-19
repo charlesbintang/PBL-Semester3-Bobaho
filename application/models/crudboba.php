@@ -33,6 +33,11 @@ class crudboba extends CI_Model
         $this->db->insert('menu_costumer', $data);
     }
 
+    function insertToDibuat($id_cart, $id_customer)
+    {
+        $this->db->query("INSERT INTO dibuat SELECT * FROM dibayar WHERE `dibayar`.`id_cart` = '$id_cart' AND `dibayar`.`id_customer` = '$id_customer';");
+    }
+
     function updateDataBoba($id, $data)
     {
         $this->db->where('id_menu', $id);
@@ -43,5 +48,11 @@ class crudboba extends CI_Model
     {
         $this->db->where('id_menu', $id);
         $this->db->delete('menu_costumer');
+    }
+
+    function deletePesanan($id)
+    {
+        $this->db->where('id_cart', $id);
+        $this->db->delete('dibayar');
     }
 }

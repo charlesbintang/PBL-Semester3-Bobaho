@@ -1,6 +1,7 @@
 <?php
 //start of "wajib ada"
 session_start();
+date_default_timezone_set("Asia/Jakarta");
 //hapus error reporting ketika debugging. Jangan hapus jika tidak debugging
 error_reporting(0);
 date_default_timezone_set("Asia/Jakarta");
@@ -14,12 +15,12 @@ $qryIdCus = mysqli_query($koneksi, $sqlIdCus);
 $idCustomer = mysqli_fetch_array($qryIdCus);
 //end of "wajib ada"
 
-//kode pesanan
+//kode pesanan , tanggal dan waktu 
 $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE `membeli`.`id_customer` = '$idCustomer[id_customer]';";
 $result = mysqli_query($koneksi, $sqlMembeli);
 $row = mysqli_fetch_array($result);
 $kodePesanan = "B" . $idCustomer['id_customer'] . "" . $row['id_cart'] . "";
-$sqlKirim = "UPDATE `membeli` SET catatan = '" . $row['catatan'] . " | " . $kodePesanan . "' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "';";
+$sqlKirim = "UPDATE `membeli` SET catatan = '" . $row['catatan'] . " | " . $kodePesanan . "', tanggal = '" . date('d-m-Y') . "', waktu = '" . date('H:i:s') . "' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "';";
 mysqli_query($koneksi, $sqlKirim);
 
 //duplikasi isi tabel dan pindahkan ke tabel dibayar

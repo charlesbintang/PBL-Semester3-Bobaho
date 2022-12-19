@@ -1,6 +1,7 @@
 <?php
 //start of "wajib ada"
 session_start();
+date_default_timezone_set("Asia/Jakarta");
 //hapus error reporting ketika debugging. Jangan hapus jika tidak debugging
 error_reporting(0);
 date_default_timezone_set("Asia/Jakarta");
@@ -20,9 +21,11 @@ if (isset($_POST['submit'])) {
     } else {
         $file_size = $_FILES['gambar']['size'];
         $file_type = $_FILES['gambar']['type'];
+        $tanggal = $_POST['tanggal'];
+        $waktu = $_POST['submit'];
         if ($file_size < 2048000 and ($file_type == 'image/jpeg' or $file_type == 'image/png')) {
             $image = addslashes(file_get_contents($_FILES['gambar']['tmp_name']));
-            $upload = mysqli_query($koneksi, "UPDATE `membeli` SET gambar = '$image', tipe_gambar = '$file_type' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'");
+            $upload = mysqli_query($koneksi, "UPDATE `membeli` SET gambar = '$image', tipe_gambar = '$file_type', tanggal = '$tanggal', waktu = '$waktu' WHERE `membeli`.`id_customer` = '" . $idCustomer['id_customer'] . "'");
             $_SESSION['QRIS'] = true;
         } else {
             echo '<span style="color:red"><b><u><i>Ukuruan File / Tipe File Tidak Sesuai</i></u></b></span>';
@@ -264,8 +267,9 @@ if (isset($_POST['submit'])) {
             <div style="display:flex; justify-content:center;">
                 <input name="gambar" type="file" accept=".jpg" required>
             </div>
+            <input type="hidden" name="tanggal" value="<?php echo date('d-m-Y'); ?>">
             <div style="display:flex; justify-content:center; padding-top:10px;">
-                <input type="submit" name="submit" style="padding: 5px 15px;">
+                <button type="submit" name="submit" value="<?php echo date('H:i:s'); ?>" class="btn btn-light" style="padding: 5px 15px;">Submit</button>
             </div>
         </form>
         <h3 style="display:flex; justify-content:center;">Atau Bayar Melalui Kasir</h3>

@@ -56,6 +56,9 @@
             <hr>
         </div>
         <div class="row">
+            <div class="mx-auto" style="width: 155px;">
+                <a href="<?= base_url('admin') ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Daftar Menu</a>
+            </div>
             <br> <br>
             <div id="tabel">
                 <table id="tabel-data" class="display nowrap table-striped table-bordered table" style="width:100%; color:white;">
@@ -71,6 +74,10 @@
                             <th>Ekstra Topping</th>
                             <th>Total Harga</th>
                             <th>Pembayaran</th>
+                            <th>Tanggal</th>
+                            <th>Waktu</th>
+                            <th>Aksi Selesai Dibuat</th>
+                            <th>Aksi Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,6 +104,10 @@
                                         <!-- <img src="<?= base_url('admin/gambar') ?>/<?= $row->id_cart ?>" width="100" alt="..."> -->
                                     <?php } ?>
                                 </td>
+                                <td><?= $row->tanggal ?></td>
+                                <td><?= $row->waktu ?></td>
+                                <td><a href="<?= base_url('admin/dibuat') ?>/<?= $row->id_cart ?>/<?= $row->id_customer ?>">Pesanan Telah Dibuat</a></td>
+                                <td><a href="<?= base_url('admin/deletePesanan') ?>/<?= $row->id_cart ?>">Delete</a></td>
 
                             </tr>
                         <?php } ?>

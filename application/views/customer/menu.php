@@ -332,7 +332,7 @@ if (isset($_POST['submit'])) {
               </div>
             </div>
             <br>
-            <p class="fst-italic" align="center">Rasa:<br> <?php echo $row["keterangan"] ?></p>
+            <p class="fst-italic" align="center">Rasa:<br> <?php echo $row["deskripsi"] ?></p>
           </div>
         <?php $counter++;
         }

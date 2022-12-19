@@ -40,6 +40,12 @@ class admin extends CI_Controller
         redirect('admin');
     }
 
+    public function deletePesanan($id)
+    {
+        $this->crudboba->deletePesanan($id);
+        redirect('admin/pesanan');
+    }
+
     public function lihatGambar()
     {
         $this->load->view('admin/imageView');
@@ -50,6 +56,13 @@ class admin extends CI_Controller
         $qryPesanan = $this->crudboba->getDataPesanan();
         $data = array('qryPesanan' => $qryPesanan);
         $this->load->view('admin/lihatPesanan', $data);
+    }
+
+    public function dibuat($id_cart, $id_customer)
+    {
+        $this->crudboba->insertToDibuat($id_cart, $id_customer);
+        $this->crudboba->deletePesanan($id_cart);
+        redirect('admin/pesanan');
     }
 
     public function insert()
