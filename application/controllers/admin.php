@@ -14,24 +14,36 @@ class admin extends CI_Controller
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('admin', ['email' =>
-        $this->session->userdata('email')])->row_array();
-
-        $queryAllBoba = $this->crudboba->getDataBoba();
-        $data = array('queryAB' => $queryAllBoba);
-        $this->load->view('admin/tambah', $data);
+        $data['user'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
+        if ($data['user']) {
+            $queryAllBoba = $this->crudboba->getDataBoba();
+            $data = array('queryAB' => $queryAllBoba);
+            $this->load->view('admin/tambah', $data);
+        } else {
+            redirect('');
+        }
     }
 
     public function tambah()
     {
-        $this->load->view('admin/halamantambah');
+        $data['user'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
+        if ($data['user']) {
+            $this->load->view('admin/halamantambah');
+        } else {
+            redirect('');
+        }
     }
 
     public function ubah($id_produk)
     {
-        $queryBobaDetail = $this->crudboba->getDataBobaDetail($id_produk);
-        $DATA = array('queryBD' => $queryBobaDetail);
-        $this->load->view('admin/edit', $DATA);
+        $data['user'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
+        if ($data['user']) {
+            $queryBobaDetail = $this->crudboba->getDataBobaDetail($id_produk);
+            $DATA = array('queryBD' => $queryBobaDetail);
+            $this->load->view('admin/edit', $DATA);
+        } else {
+            redirect('');
+        }
     }
 
     public function delete($id)
@@ -53,23 +65,38 @@ class admin extends CI_Controller
 
     public function pesanan()
     {
-        $qryPesanan = $this->crudboba->getDataPesanan();
-        $data = array('qryPesanan' => $qryPesanan);
-        $this->load->view('admin/lihatPesanan', $data);
+        $data['user'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
+        if ($data['user']) {
+            $qryPesanan = $this->crudboba->getDataPesanan();
+            $data = array('qryPesanan' => $qryPesanan);
+            $this->load->view('admin/lihatPesanan', $data);
+        } else {
+            redirect('');
+        }
     }
 
     public function selesai()
     {
-        $qryPesanan = $this->crudboba->getDataPesananSelesai();
-        $data = array('qryPesanan' => $qryPesanan);
-        $this->load->view('admin/lihatPesananSelesai', $data);
+        $data['user'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
+        if ($data['user']) {
+            $qryPesanan = $this->crudboba->getDataPesananSelesai();
+            $data = array('qryPesanan' => $qryPesanan);
+            $this->load->view('admin/lihatPesananSelesai', $data);
+        } else {
+            redirect('');
+        }
     }
 
     public function dibuat($id_cart, $id_customer)
     {
-        $this->crudboba->insertToDibuat($id_cart, $id_customer);
-        $this->crudboba->deletePesanan($id_cart);
-        redirect('admin/pesanan');
+        $data['user'] = $this->db->get_where('admin', ['email' => $this->session->userdata('email')])->row_array();
+        if ($data['user']) {
+            $this->crudboba->insertToDibuat($id_cart, $id_customer);
+            $this->crudboba->deletePesanan($id_cart);
+            redirect('admin/pesanan');
+        } else {
+            redirect('');
+        }
     }
 
     public function insert()

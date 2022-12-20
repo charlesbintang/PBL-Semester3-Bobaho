@@ -56,7 +56,7 @@
             <hr>
         </div>
         <div class="row">
-            <div class="mx-auto" style="width: 308px;">
+            <div class="mx-auto" style="width: 315px;">
                 <a href="<?= base_url('admin') ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Daftar Menu</a>
                 <a href="<?= base_url('admin/pesanan') ?>" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Pesanan</a>
             </div>
