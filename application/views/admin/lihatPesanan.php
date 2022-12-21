@@ -110,7 +110,7 @@
                                 </td>
                                 <td><?= $row->tanggal ?></td>
                                 <td><?= $row->waktu ?></td>
-                                <td><a href="<?= base_url('admin/dibuat') ?>/<?= $row->id_cart ?>/<?= $row->id_customer ?>">Pesanan Telah Dibuat</a></td>
+                                <td><a href="<?= base_url('admin/dibuat') ?>/<?= $row->id_cart ?>/<?= $row->id_customer ?>">Pesanan Selesai Dibuat</a></td>
                                 <td><a href="<?= base_url('admin/deletePesanan') ?>/<?= $row->id_cart ?>">Delete</a></td>
 
                             </tr>
