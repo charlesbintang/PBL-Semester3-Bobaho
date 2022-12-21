@@ -225,7 +225,7 @@ if (isset($_POST['submit'])) {
                                                 <!-- Bonus Topping  -->
                                                 <tr align="center">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
-                                                        <td> <img src="<?= base_url('assets/aset boba/1x'), $arrToppingBoba[$y]; ?>" alt="..." width="30px"></td>
+                                                        <td> <img src="<?= base_url('assets/aset boba/1x/'), $arrToppingBoba[$y]; ?>" alt="..." width="30px"></td>
                                                     <?php } ?>
                                                 </tr>
                                                 <tr align="center">
@@ -248,7 +248,7 @@ if (isset($_POST['submit'])) {
                                                 </tr>
                                                 <tr align="center">
                                                     <?php for ($y = 0; $y < $jumlahBoba; $y++) { ?>
-                                                        <td> <img src="<?= base_url('assets/aset boba/1x'), $arrToppingBoba[$y]; ?>" alt="..." width="30px"></td>
+                                                        <td> <img src="<?= base_url('assets/aset boba/1x/'), $arrToppingBoba[$y]; ?>" alt="..." width="30px"></td>
                                                     <?php } ?>
                                                 </tr>
                                                 <tr align="center">
