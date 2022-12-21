@@ -6,3 +6,18 @@ body {
 h2 {
     color: #fff;
 }
+
+.wrapper-scroll {
+    max-height: 120px;
+    display: flex;
+    overflow-x: auto;
+}
+
+.wrapper-item {
+    width: 184px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px;
+}

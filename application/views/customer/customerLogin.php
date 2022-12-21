@@ -1,41 +1,5 @@
 <?php
 error_reporting(0);
-// $koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
-
-// if (isset($_POST['login'])) {
-
-//     $username = $_POST['username'];
-//     $password = $_POST['password'];
-
-
-//     if ($username == '' or $password == '') {
-//         echo "<script> 
-//                 alert('Silahkan masukkan username dan password Anda'); 
-//                 window.location = ''; 
-//                 </script>";
-//     } else {
-//         $query = "SELECT * FROM customer WHERE nama_customer = '$username'";
-//         $result = mysqli_query($koneksi, $query);
-//         $check = mysqli_fetch_array($result);
-
-//         if ($check['nama_customer'] == $username) {
-//             if (password_verify($password, $check['kata_sandi'])) {
-//                 $_SESSION['session_username'] = $username; //tersimpan dalam server
-//                 redirect('menu');
-//             } else {
-//                 echo "<script>
-//                     alert('Username atau password salah');
-//                     window.location = '';
-//                     </script>";
-//             }
-//         } else {
-//             echo "<script>
-//                     alert('Username atau password salah');
-//                     window.location = '';
-//                     </script>";
-//         }
-//     }
-// }
 ?>
 
 <!DOCTYPE html>

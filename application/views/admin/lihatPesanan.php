@@ -56,11 +56,15 @@
             <hr>
         </div>
         <div class="row">
-            <div class="mx-auto" style="width: 365px;">
-                <a href="<?= base_url('admin') ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Daftar Menu</a>
-                <a href="<?= base_url('admin/selesai') ?>" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Pesanan Selesai</a>
+            <div class="wrapper-scroll">
+                <div class="wrapper-item">
+                    <a href="<?= base_url('admin') ?>" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Daftar Menu</a>
+                </div>
+                <div class="wrapper-item">
+                    <a href="<?= base_url('admin/selesai') ?>" class="btn btn-secondary"><i class="bi bi-bag-plus-fill"></i>&nbsp;Lihat Pesanan Selesai</a>
+                </div>
             </div>
-            <br> <br>
+            <br> <br> <br>
             <div id="tabel">
                 <table id="tabel-data" class="display nowrap table-striped table-bordered table" style="width:100%; color:white;">
                     <thead>
