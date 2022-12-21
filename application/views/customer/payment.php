@@ -167,10 +167,7 @@ if (isset($_POST['submit'])) {
     $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";
     $result = mysqli_query($koneksi, $sqlMembeli);
     $check = mysqli_fetch_array($result);
-    if (mysqli_num_rows($result) > 0 && $check['catatan'] != ' ') {
-        //session payment, untuk mencegah user direct ke notifQRIS/notifCash tanpa melalui payment
-        session_start();
-        $_SESSION['session_payment'] = $idCustomer['id_customer'];
+    if (mysqli_num_rows($result) > 0 && $check['catatan'] != ' ' && $_SESSION['session_payment'] == $idCustomer['id_customer']) {
         // looping php, dibeli
         $totalPembayaran = 0;
         $sqlMembeli = "SELECT * FROM membeli INNER JOIN menu_costumer ON membeli.id_menu = menu_costumer.id_menu WHERE id_customer = '$idCustomer[id_customer]'; ";

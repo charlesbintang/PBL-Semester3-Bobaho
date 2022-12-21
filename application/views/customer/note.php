@@ -19,6 +19,8 @@ if (isset($_POST['form'])) {
     $sqlKirim = "UPDATE `membeli` SET `catatan` = '" . $form . "' WHERE `membeli`.`id_customer` = '$idCustomer[id_customer]';";
     $qryKirim = mysqli_query($koneksi, $sqlKirim);
     if ($qryKirim) {
+        //session payment, untuk mencegah user direct ke notifQRIS/notifCash tanpa melalui payment
+        $_SESSION['session_payment'] = $idCustomer['id_customer'];
         echo '
         <script>
         document.location.href = "' . base_url('menu/payment') . '";

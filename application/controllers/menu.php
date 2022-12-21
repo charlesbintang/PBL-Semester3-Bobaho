@@ -97,6 +97,7 @@ class menu extends CI_Controller
                     redirect('menu/cash');
                 }
             } else {
+                echo 'gila sih ga bisa cui';
                 echo $this->email->print_debugger();
                 die;
             }
