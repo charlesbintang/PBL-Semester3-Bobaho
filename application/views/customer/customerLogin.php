@@ -1,40 +1,41 @@
 <?php
 error_reporting(0);
-$koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
+// $koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
 
-if (isset($_POST['login'])) {
+// if (isset($_POST['login'])) {
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+//     $username = $_POST['username'];
+//     $password = $_POST['password'];
 
 
-    if ($username == '' or $password == '') {
-        echo "<script> 
-                alert('Silahkan masukkan username dan password Anda'); 
-                window.location = ''; 
-                </script>";
-    } else {
-        $query = "SELECT * FROM customer WHERE nama_customer = '$username'";
-        $result = mysqli_query($koneksi, $query);
-        $check = mysqli_fetch_array($result);
+//     if ($username == '' or $password == '') {
+//         echo "<script> 
+//                 alert('Silahkan masukkan username dan password Anda'); 
+//                 window.location = ''; 
+//                 </script>";
+//     } else {
+//         $query = "SELECT * FROM customer WHERE nama_customer = '$username'";
+//         $result = mysqli_query($koneksi, $query);
+//         $check = mysqli_fetch_array($result);
 
-        if ($check['nama_customer'] == '' || $check['kata_sandi'] != md5($password)) {
-            $err = 1;
-        }
-
-        if ($err != 1) {
-            $_SESSION['session_username'] = $username; //tersimpan dalam server
-            $_SESSION['session_password'] = md5($password);
-
-            redirect('menu');
-        } else {
-            echo "<script>
-                    alert('Username atau password salah');
-                    window.location = '';
-                    </script>";
-        }
-    }
-}
+//         if ($check['nama_customer'] == $username) {
+//             if (password_verify($password, $check['kata_sandi'])) {
+//                 $_SESSION['session_username'] = $username; //tersimpan dalam server
+//                 redirect('menu');
+//             } else {
+//                 echo "<script>
+//                     alert('Username atau password salah');
+//                     window.location = '';
+//                     </script>";
+//             }
+//         } else {
+//             echo "<script>
+//                     alert('Username atau password salah');
+//                     window.location = '';
+//                     </script>";
+//         }
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -157,18 +158,18 @@ if (isset($_POST['login'])) {
         <img width="50px" height="56px" style="margin-top: 0px" src="<?= base_url('assets/'); ?>aset boba/person.png" alt="">
         SIGN IN
 
-        <form action="" method="post">
+        <form class="class" action="<?= base_url('') ?>" method="post">
             <div class="input">
                 <label class="form-label"></label>
-                <input type="text" class="form-control" id="emaill" name="username" placeholder="Username">
+                <input type="text" class="form-control" id="emaill" name="nama_customer" placeholder="Username" value="<?= set_value('nama_customer') ?>" required>
                 <label class="form-label"></label>
-                <input type="password" class="form-control" id="emaill" name="password" style="margin-bottom: 10px;" placeholder="Password">
+                <input type="password" class="form-control" id="emaill" name="kata_sandi" style="margin-bottom: 10px;" placeholder="Password" required>
                 <br>
                 <button class="Button" type="submit" name="login" value="Login" style="margin-top: 20px;">Sign In</button>
             </div>
         </form>
         <hr>
-        <p align="center">Belum punya akun? <a href="daftar.php">Daftar di sini!</a></p>
+        <p align="center">Belum punya akun? <a href="<?= base_url('auth/registration'); ?>">Daftar di sini!</a></p>
         <p align="center"><a href="<?= base_url('auth/login'); ?>">Login admin</a></p>
     </div>
 

@@ -1,25 +1,37 @@
 <?php
-$koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
+// $koneksi = mysqli_connect("localhost", "root", "", "Bobaho");
 
-if (isset($_POST['signup'])) {
+// if (isset($_POST['signup'])) {
+//     $this->load->library('form_validation');
+//     if ($this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[customer.nama_customer]', ['is unique' => 'This username is already registered']) && $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[2]', ['min_length' => 'Password too short'])) {
+//         $data = [
+//             'id_customer' => NULL,
+//             'nama_customer' => htmlspecialchars($this->input->post('username', true)),
+//             'kata_sandi' => password_hash($this->input->post('password'), PASSWORD_DEFAULT)
+//         ];
+//         $this->db->insert('customer', $data);
+//         redirect('');
+//     }
 
-    // filter data yang diinputkan
-    $username = filter_input(INPUT_POST, 'username');
-    // enkripsi password
-    $password = md5($_POST["password"]);
+// // filter data yang diinputkan
+// $username = filter_input(INPUT_POST, 'username');
+// // enkripsi password
+// $password = md5($_POST["password"]);
 
-    // menyiapkan query 
-    $sql = "INSERT INTO customer (id_customer, nama_customer, kata_sandi) 
-                VALUES (NULL, '$username', '$password');";
+// // menyiapkan query 
+// $sql = "INSERT INTO customer (id_customer, nama_customer, kata_sandi) 
+//             VALUES (NULL, '$username', '$password');";
 
 
-    // eksekusi query untuk menyimpan ke database
-    $saved = mysqli_query($koneksi, $sql);
+// // eksekusi query untuk menyimpan ke database
+// $saved = mysqli_query($koneksi, $sql);
 
-    // jika query simpan berhasil, maka user sudah terdaftar
-    // maka alihkan ke halaman login
-    if ($saved) header("Location: index.php");
-}
+// // jika query simpan berhasil, maka user sudah terdaftar
+// // maka alihkan ke halaman login
+// if ($saved) {
+//     redirect('');
+// } else {
+// }
 
 ?>
 
@@ -132,18 +144,22 @@ if (isset($_POST['signup'])) {
 
 <body>
     <div class="MainContainer">
-        <img width="50px" height="56px" style="margin-top: 0px" src="aset boba/person.png" alt="">
+        <img width="50px" height="56px" style="margin-top: 0px" src="<?= base_url('assets/'); ?>aset boba/person.png" alt="">
         SIGN UP
 
-        <form action="" method="post">
+        <form class="customer" method="POST" action="<?= base_url('auth/registration'); ?>">
             <div class="input">
                 <label class="form-label"></label>
-                <input type="text" class="form-control" id="emaill" name="username" placeholder="Username">
+                <input type="text" class="form-control" id="emaill" name="nama_customer" placeholder="Username" value="<?= set_value('nama_customer'); ?>">
+                <?= form_error('nama_customer', '<small style="color:red;margin-left: 10px;">', '</small>'); ?>
                 <label class="form-label"></label>
-                <input type="password" class="form-control" id="emaill" name="password" style="margin-bottom: 10px;" placeholder="Password">
+                <input type="password" class="form-control" id="emaill" name="kata_sandi" style="margin-bottom: 10px;" placeholder="Password">
+                <?= form_error('kata_sandi', '<small style="color:red;margin-left: 10px;">', '</small>'); ?>
                 <button class="Button" type="submit" name="signup" value="signup" style="margin-top: 20px;">Sign Up</button>
             </div>
         </form>
+        <hr>
+        <p align="center"><a href="<?= base_url(''); ?>">Kembali</a></p>
     </div>
 </body>
 

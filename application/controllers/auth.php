@@ -10,7 +10,47 @@ class Auth extends CI_Controller
     }
     public function index()
     {
-        $this->load->view('customer/customerLogin');
+        $this->form_validation->set_rules('nama_customer', 'Username', 'trim|required');
+        $this->form_validation->set_rules('kata_sandi', 'Password', 'trim|required');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('customer/customerLogin');
+        } else {
+            $this->_loginCustomer();
+        }
+    }
+
+    private function _loginCustomer()
+    {
+        $nama_customer = $this->input->post('nama_customer');
+        $kata_sandi = $this->input->post('kata_sandi');
+
+        $user = $this->db->get_where('customer', ['nama_customer' => $nama_customer])->row_array();
+
+        if ($user) {
+
+            if (password_verify($kata_sandi, $user['kata_sandi'])) {
+                $data = [
+                    'session_username' => $user['nama_customer']
+                ];
+                $this->session->set_userdata($data);
+                //untuk mengarahkan ke halaman user
+                redirect('menu');
+            } else {
+                echo '
+                <script>
+                alert("Password Salah");
+                document.location.href = "' . base_url('') . '"
+                </script>';
+                exit;
+            }
+        } else {
+            echo '
+            <script>
+            alert("Akun tidak terdaftar");
+            document.location.href = "' . base_url('') . '"
+            </script>';
+            exit;
+        }
     }
 
     public function login()
@@ -60,34 +100,32 @@ class Auth extends CI_Controller
         }
     }
 
-    // public function registration()
-    // {
+    public function registration()
+    {
 
-    //     $this->form_validation->set_rules('name', 'Name', 'required|trim');
-    //     $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is unique' => 'This email is already registered']);
-    //     $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[2]|matches[password2]', ['matches' => 'Password dont match', 'min_length' => 'Password too short']);
-    //     $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
+        // $this->form_validation->set_rules('nama_customer', 'Username', 'required|trim');
+        $this->form_validation->set_rules('nama_customer', 'Username', 'required|trim|is_unique[customer.nama_customer]', ['is unique' => 'Username ini telah terdaftar!']);
+        $this->form_validation->set_rules('kata_sandi', 'Password', 'required|trim|min_length[2]', ['min_length' => 'Password terlalu pendek']);
+        // $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
 
 
-    //     if ($this->form_validation->run() == false) {
-    //         $data['title'] = 'Registration';
-    //         $this->load->view('templates/auth_header', $data);
-    //         $this->load->view('auth/registration');
-    //         $this->load->view('templates/auth_footer');
-    //     } else {
-    //         $data = [
-    //             'nama' => htmlspecialchars($this->input->post('name', true)),
-    //             'email' => htmlspecialchars($this->input->post('email', true)),
-    //             'gambar' => 'default.jpg',
-    //             'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-    //             'role_id' => 2,
-    //             'is_active' => 1,
-    //             'waktu_pembuatan' => time()
-    //         ];
+        if ($this->form_validation->run() == false) {
+            $this->load->view('customer/daftar');
+        } else {
+            $data = [
+                'id_customer' => NULL,
+                'nama_customer' => htmlspecialchars($this->input->post('nama_customer', true)),
+                'kata_sandi' => password_hash($this->input->post('kata_sandi'), PASSWORD_DEFAULT)
 
-    //         $this->db->insert('user', $data);
-    //         $this->session->set_flashdata('message', '<div class="alert-success" role="alert"> Congatulation your account has been created, Please login !</div>');
-    //         redirect('auth');
-    //     }
-    // }
+            ];
+
+            $this->db->insert('customer', $data);
+            echo '
+            <script>
+            alert("Selamat akun Anda telah dibuat!");
+            document.location.href = "' . base_url('') . '"
+            </script>';
+            exit;
+        }
+    }
 }
