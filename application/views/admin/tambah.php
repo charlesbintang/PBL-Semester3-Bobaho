@@ -40,7 +40,7 @@
             <a class="navbar-brand" href="<?= base_url('admin') ?>">Admin</a>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('auth') ?>">Logout</a>
+                    <a class="nav-link" href="<?= base_url('auth/logout') ?>">Logout</a>
                 </li>
             </ul>
         </div>
