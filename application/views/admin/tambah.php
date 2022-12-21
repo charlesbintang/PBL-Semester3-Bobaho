@@ -95,7 +95,7 @@
                                 <td><?= $row->jenis_produk ?></td>
                                 <td><?= $row->kategori ?></td>
                                 <td><?= $row->nama_produk ?></td>
-                                <td><?= $row->harga ?></td>
+                                <td><?= $row->harga . ".000" ?></td>
                                 <td><?= $row->rating ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->status_produk ?></td>
