@@ -160,8 +160,28 @@ class admin extends CI_Controller
             $queryBobaDetail = $this->crudboba->getDataBobaDetail($id);
             $DATA = array(
                 'queryBD' => $queryBobaDetail,
-                'error' => $this->upload->display_errors('<p style="color:red;">', '</p>')
+                'upload_data' => $this->upload->data()
             );
+
+            $jenis = $this->input->post('jenis');
+            $kategori = $this->input->post('kategori');
+            $nama = $this->input->post('nama');
+            $harga = $this->input->post('harga');
+            $rating = $this->input->post('rating');
+            $deskripsi = $this->input->post('deskripsi');
+            $status = $this->input->post('status');
+
+            $ArrUpdate = array(
+                'jenis_produk' => $jenis,
+                'kategori' => $kategori,
+                'nama_produk' => $nama,
+                'harga' => $harga,
+                'rating' => $rating,
+                'deskripsi' => $deskripsi,
+                'status_produk' => $status
+            );
+
+            $this->crudboba->updateDataBoba($id, $ArrUpdate);
             $this->load->view('admin/edit', $DATA);
         } else {
             $id = $this->input->post('id');
